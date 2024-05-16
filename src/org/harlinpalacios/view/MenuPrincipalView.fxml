@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harlinpalacios.controller.MenuPrincipalController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/minimercadoFondo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="145.0" fitWidth="184.0" layoutX="429.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/mini.png" />
+         </image>
+      </ImageView>
+      <MenuBar fx:id="btnMenuBar" layoutX="14.0" layoutY="14.0" prefHeight="29.0" prefWidth="217.0" styleClass="botton2" stylesheets="@../resouce/MiniMercadoCSS.css">
+        <menus>
+          <Menu mnemonicParsing="false" onAction="#clicProveedores" text="Modulo">
+            <items>
+                  <MenuItem fx:id="btnMenuProveedores" mnemonicParsing="false" onAction="#clicProveedores" text="Proveedores" />
+                  <MenuItem fx:id="btnMenuClientes" mnemonicParsing="false" onAction="#clicClientes" text="Clientes" />
+                  <MenuItem fx:id="btnMenuCompras" mnemonicParsing="false" onAction="#clicCompras" text="Compras" />
+                  <MenuItem fx:id="btnMenuCargos" mnemonicParsing="false" onAction="#clicCargos" text="Cargos" />
+                  <MenuItem fx:id="btnMenuTipoProducto" mnemonicParsing="false" onAction="#clicTipoProducto" text="Tipo De Productos" />
+                  <MenuItem fx:id="btnMenuEmpleados" mnemonicParsing="false" onAction="#clicEmpleados" text="Empleados" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Reportes">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Compra y Venta de Productos" />
+                  <MenuItem mnemonicParsing="false" text="Inventario" />
+                  <MenuItem mnemonicParsing="false" text="Salario" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" onAction="#clicProgramador" text="Acerca de">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Ayuda" />
+                  <MenuItem fx:id="btnMenuProgramador" mnemonicParsing="false" onAction="#clicProgramador" text="Programador" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>

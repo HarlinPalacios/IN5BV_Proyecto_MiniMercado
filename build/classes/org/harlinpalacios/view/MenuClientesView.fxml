@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="551.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harlinpalacios.controller.MenuClientesController">
+   <children>
+      <ImageView fitHeight="564.0" fitWidth="723.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/Clientes.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="70.0" fitWidth="73.0" layoutX="629.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/clientesssss.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="btnRegresar" layoutX="14.0" layoutY="510.0" mnemonicParsing="false" onAction="#regresar" prefHeight="30.0" prefWidth="76.0" text="Regresar" />
+      <GridPane layoutX="59.0" layoutY="180.0" prefHeight="70.0" prefWidth="444.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="59.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="89.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="30.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="74.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="65.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="326.0" minWidth="10.0" prefWidth="68.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Codigo Ciente" />
+            <TextField fx:id="txtCodigoC" onAction="#agregar" GridPane.columnIndex="1" />
+            <Label text="NIT" GridPane.columnIndex="2" />
+            <TextField fx:id="txtNITC" onAction="#agregar" prefHeight="27.0" prefWidth="85.0" GridPane.columnIndex="3" />
+            <Label text="Nombre" GridPane.columnIndex="4" />
+            <TextField fx:id="txtNombreC" onAction="#agregar" prefHeight="25.0" prefWidth="95.0" GridPane.columnIndex="5" />
+            <Label text="Apellido" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <TextField fx:id="txtApellidoC" onAction="#agregar" prefHeight="16.0" prefWidth="156.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <Label text="Telefono" GridPane.rowIndex="1" />
+            <TextField fx:id="txtTelefonoC" onAction="#agregar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="67.0" layoutY="86.0" prefHeight="30.0" prefWidth="359.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="57.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="143.0" minWidth="10.0" prefWidth="99.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="58.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="148.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" prefWidth="62.0" text="Direccion" />
+            <Label text="Correo" GridPane.columnIndex="2" />
+            <TextField fx:id="txtDireccionC" onAction="#agregar" prefHeight="25.0" prefWidth="106.0" GridPane.columnIndex="1" />
+            <TextField fx:id="txtCorreoC" onAction="#agregar" prefHeight="25.0" prefWidth="120.0" GridPane.columnIndex="3" />
+         </children>
+      </GridPane>
+      <TableView fx:id="tblClientes" layoutX="59.0" layoutY="303.0" onMouseClicked="#seleccionarElemento" prefHeight="197.0" prefWidth="645.0">
+        <columns>
+          <TableColumn fx:id="colCodigoC" prefWidth="95.0" text="codigoCliente" />
+          <TableColumn fx:id="colNITC" prefWidth="77.0" text="NITcliente" />
+            <TableColumn fx:id="colNombreC" prefWidth="91.0" text="nombreCliente" />
+            <TableColumn fx:id="colApellidoC" prefWidth="95.0" text="apellidoCliente" />
+            <TableColumn fx:id="colDireccionC" prefWidth="97.0" text="direccionCliente" />
+            <TableColumn fx:id="colTelefonoC" prefWidth="100.0" text="telefonoCliente" />
+            <TableColumn fx:id="colCorreoC" prefWidth="89.0" text="correoCliente" />
+        </columns>
+      </TableView>
+      <GridPane layoutX="544.0" layoutY="108.0" prefHeight="184.0" prefWidth="126.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="43.0" prefWidth="127.0" text="Agregar" />
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="41.0" prefWidth="126.0" text="Eliminar" GridPane.rowIndex="1" />
+            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="44.0" prefWidth="127.0" text="Reporte" GridPane.rowIndex="3" />
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="126.0" text="Editar" GridPane.rowIndex="2" />
+            <ImageView fx:id="imgEditar" fitHeight="31.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../imagenes/Actualizar%20Clientes.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgReporte" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../imagenes/Reporte%20clientes.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgAgregar" fitHeight="39.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Agregar%20Cliente.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgEliminar" fitHeight="31.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../imagenes/Eliminar%20Cliente.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

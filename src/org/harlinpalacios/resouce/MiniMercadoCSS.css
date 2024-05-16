@@ -1,0 +1,38 @@
+.menu-bar{
+    -fx-background-color: #f7ac15;
+        -fx-opacity: 0.5;
+        -fx-border-width: 2.0;
+                
+}
+.botton1{
+    -fx-background-color: transparent;
+    
+}
+
+.botton2{
+    -fx-background-color: #6fa32e;
+    -fx-border-color: #ee8a15;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+
+.botton3:hover{
+    -fx-background-color: #729d3e;
+    -fx-font-size: 22px;
+    -fx-effect: dropshadow(three-pass-box, black, 20,0,0,0);
+    
+}
+
+.botton4:hoover{
+    -fx-front_size: 22px;
+}
+
+.table-view.column-header,
+.table-view.column-header-background.filler{
+    -fx-cell-size:20;
+    -fx-background-color: #fdebc6
+}
+
+.table-row-cel:selected{
+    -fx-background-color: #4d7a2e;
+}

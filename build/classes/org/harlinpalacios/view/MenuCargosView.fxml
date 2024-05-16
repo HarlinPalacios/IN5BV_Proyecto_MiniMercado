@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harlinpalacios.controller.MenuCargosController">
+   <children>
+      <ImageView fitHeight="411.0" fitWidth="724.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/Cargos.png" />
+         </image>
+      </ImageView>
+      <GridPane layoutX="161.0" layoutY="72.0" prefHeight="60.0" prefWidth="254.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtCodigoC" onAction="#agregar" prefHeight="25.0" prefWidth="112.0" GridPane.columnIndex="1" />
+            <TextField fx:id="txtNombreC" onAction="#agregar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Codigo Empleado" />
+            <Label text="Nombre del Empleado" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="476.0" layoutY="131.0" prefHeight="30.0" prefWidth="226.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="108.0" minWidth="10.0" prefWidth="80.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="146.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TextField fx:id="txtDescripcionC" onAction="#agregar" prefHeight="25.0" prefWidth="122.0" GridPane.columnIndex="1" />
+            <Label text="Descripcion" />
+         </children>
+      </GridPane>
+      <TableView fx:id="tblCargos" layoutX="224.0" layoutY="198.0" onMouseClicked="#selecionarElementos" prefHeight="180.0" prefWidth="414.0">
+        <columns>
+          <TableColumn fx:id="colCodigoC" prefWidth="151.0" text="Codigo Empleado" />
+          <TableColumn fx:id="colNombreC" prefWidth="116.0" text="Nombre" />
+            <TableColumn fx:id="colDescripcionC" prefWidth="149.0" text="Descripcion" />
+        </columns>
+      </TableView>
+      <GridPane layoutX="36.0" layoutY="102.0" prefHeight="217.0" prefWidth="112.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="40.0" prefWidth="90.0" text="Agregar">
+               <graphic>
+                  <ImageView fx:id="imgAgregar" fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Agregar%20Cliente.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#eliminar" prefHeight="40.0" prefWidth="90.0" text="Eliminar" GridPane.rowIndex="1">
+               <graphic>
+                  <ImageView fx:id="imgEliminar" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Eliminar%20Cliente.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnEditar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="90.0" text="Actualizar" GridPane.rowIndex="2" />
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#actualizar" prefHeight="40.0" prefWidth="90.0" text="Reporte" GridPane.rowIndex="3">
+               <graphic>
+                  <ImageView fx:id="imgReporte" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/Reporte%20clientes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <ImageView fx:id="imgEditar" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../imagenes/Actualizar%20Clientes.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <Button fx:id="btnRegresar" layoutX="647.0" layoutY="365.0" mnemonicParsing="false" onAction="#regresar" text="Regresar" />
+   </children>
+</AnchorPane>
