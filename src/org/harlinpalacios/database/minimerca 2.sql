@@ -72,14 +72,14 @@ create table Facturas(
 	foreign key FK_codigoEmpleados(codigoEmpleados) references Empleados(codigoEmpleados)
 );
 
-/*
+
 create table Productos(
 	codigoProductos int not null,
 	descripcionProducto varchar(100) not null,
-	precioUnitario decimal(10,2),
-	precioDocena decimal(10,2),
-	precioMayor decimal(10,2),
-	imagenProducto BLOB,
+	precioUnitario decimal(10,2) not null,
+	precioDocena decimal(10,2) not null,
+	precioMayor decimal(10,2) not null,
+	imagenProducto varchar (25),
 	existencia int not null,
 	codigoTipoPro int not null,
 	codigoProveedores int not null,
@@ -87,7 +87,7 @@ create table Productos(
 	foreign key FK_codigoTipoPro(codigoTipoPro) references TipoProducto(codigoTipoPro),
 	foreign key FK_codigoProveedores(codigoProveedores) references Proveedores(codigoProveedores)
 );
-
+/*
 create table DetallesCompra(
 	codigoDetalles int not null,
 	costoUnitario decimal(10,2) not null,
@@ -611,8 +611,8 @@ Delimiter ;
 call sp_EditarEmpleado(2,'Mariano','Valdez',1000.00,'Amatitlan','Tusrno de Dia',1);
 call sp_ListarEmpleados();
 
--- ////////////////////////////////////////////////////////Procedimiento Almacenado De Facturas//////////////////////////////////////////////////
--- ***********************************************************Agregar Facturas******************************************************
+-- ////////////////////////////////////////////////////////////////////Procedimiento Almacenado De Facturas///////////////////////////////////////////////////////////////
+-- ******************************************************************************Agregar Facturas*************************************************************************
 Delimiter $$
 		create procedure sp_AgregarFacturas(in codigoFactura  int, in estado varchar(50), in totalFactura decimal(10,2), in codigoCliente int, in codigoEmpleados int)
 	Begin
@@ -642,6 +642,7 @@ Delimiter ;
 
 call sp_ListarFacturas();
 
+/*
 -- ***********************************************************Buscar Factura*******************************************************
 Delimiter $$
 	create procedure sp_BuscarFactura(in factuID int)
@@ -658,6 +659,7 @@ Delimiter $$
 Delimiter ;
 
 call sp_BuscarFactura(1);
+*/
 -- ***********************************************************Eliminar Factura*****************************************************
 Delimiter $$
 create procedure sp_EliminarFactura(in factuID int)
@@ -687,3 +689,92 @@ Delimiter ;
 
 call sp_EditarFactura(1,'Rechazada',100.00,3,2);
 call sp_ListarFacturas();
+
+
+-- ////////////////////////////////////////////////////////Procedimiento Almacenado De Facturas//////////////////////////////////////////////////
+-- ***********************************************************Agregar Productos******************************************************
+Delimiter $$
+		create procedure sp_AgregarProductos(in codigoProductos  int, in decripcionProducto varchar(100), in precioUnitario decimal(10,2), in precioDocena decimal(10,2), in precioMayor decimal(10,2), imagenProducto varchar(25), in existencia int, in codigoTipoPro int, in codigoProveedores int)
+	Begin
+		insert into Productos (codigoProductos,  decripcionProducto, precioUnitario, precioDocena, precioMayor, imagenProducto, existencia, codigoTipoPro, codigoProveedores)
+		values (codigoProductos,  decripcionProducto, precioUnitario, precioDocena, precioMayor, imagenProducto, existencia, codigoTipoPro, codigoProveedores);
+	End $$ 
+Delimiter ;
+
+call sp_AgregarProductos(1,'Alimentos',10.00,100.00,1000.00,'drtsfjyj',1,2,3);
+call sp_AgregarProductos(2,'Fritos',50.00,200.00,2000.00,'xgmdghkdkd',1,2,2);
+call sp_AgregarProductos(3,'Golocinas',80.00,300.00,3000.00,'syukstukeuskys',1,2,3);
+
+-- ***********************************************************Listar Produstos*******************************************************
+Delimiter $$
+	create procedure sp_ListarProductos()
+	Begin
+		select
+        I.codigoProductos,
+        I.decripcionProducto,
+        I.precioUnitario,
+        I.precioDocena,
+        I.precioMayor,
+        I.imagenProducto,
+        I.existencia,
+        I.codigoTipoPro,
+        I.codigoProveedores
+        from Productos I;
+	End $$
+Delimiter ;
+
+call sp_ListarProductos();
+
+-- ***********************************************************Buscar Producto********************************************************
+Delimiter $$
+	create procedure sp_BuscarProducto(in produID int)
+    Begin 
+		select
+        I.codigoProductos,
+        I.decripcionProducto,
+        I.precioUnitario,
+        I.precioDocena,
+        I.precioMayor,
+        I.imagenProducto,
+        I.existencia,
+        I.codigoTipoPro,
+        I.codigoProveedores
+        from Productos I
+        where Productos = produID;
+	End $$
+Delimiter ;
+
+call sp_BuscarProducto(1);
+
+-- ***********************************************************Eliminar Producto******************************************************
+Delimiter $$
+create procedure sp_EliminarProductos(in produID int)
+    Begin 
+		delete from Productos
+			where codigoFactura = produID;
+		End $$
+Delimiter ;
+
+call sp_EliminarProductos(2);
+call sp_ListarProductos();
+-- ***********************************************************Editar Producto********************************************************
+Delimiter $$
+	create procedure sp_EditarProducto(in codigoProdu  int, in decripcionProdu varchar(100), in precioUnita decimal(10,2), in precioDoce decimal(10,2), in precioMay decimal(10,2), imagenProdu varchar(25), in exis int, in codigoTiPro int, in codigoProve int)
+		Begin 
+			update Productos I
+				set
+			I.codigoProductos = codigoProdu,
+			I.decripcionProducto = decripcionProdu,
+			I.precioUnitario = precioUnita,
+			I.precioDocena = precioDoce,
+			I.precioMayor = precioMay,
+			I.imagenProducto = imagenProdu,
+			I.existencia = exis,
+			I.codigoTipoPro = codigoTiPro,
+			I.codigoProveedores = codigoProve
+            where codigoProductos  = codigoProdu;
+		End $$
+Delimiter ;
+
+call sp_EditarProducto(1,'Fritos',20.00,300.00,5000.00,'drtsfjyj',1,2,3);
+call sp_ListarProductos();

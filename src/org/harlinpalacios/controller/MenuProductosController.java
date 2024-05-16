@@ -1,33 +1,57 @@
 package org.harlinpalacios.controller;
 
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import org.harlinpalacios.bean.Productos;
+import org.harlinpalacios.bean.Proveedores;
+import org.harlinpalacios.bean.TipoProducto;
+import org.harlinpalacios.db.Conexion;
 import org.harlinpalacios.system.Principal;
 
 
 public class MenuProductosController implements Initializable {
     private Principal escenarioPrincipal;
-    @FXML private Button btnRegresar; 
+    private enum operaciones {AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NINGUNO}
+    private operaciones tipoDeOperaciones = operaciones.NINGUNO;
+    private ObservableList<Productos> listarProductos;
+    private ObservableList<Proveedores> listarProveedores;
+    private ObservableList<TipoProducto> listarTipoDProducto;
+    
+    //Setiar los Objetos
+    //Iniciales de Combo Box cmb"Funcion"
+    
+    
+    
     
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void setEscenarioPrincipal(Principal escenarioPrincipal) {
-        this.escenarioPrincipal = escenarioPrincipal;
+    public void cargardatos(){
+        
+        
+        
     }
     
-   
     
-    @FXML
-    public void regresar (ActionEvent event){
-        if (event.getSource() == btnRegresar){
-        escenarioPrincipal.menuPrincipalView();
+    public ObservableList<Productos> getProducto(){
+        ArrayList<Productos> lista = new ArrayList<Productos>();
+        try{
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("");
+            ResultSet resultado = procedimiento.executeQuery();
+            while (resultado.next()){
+                lista.add(new Producto (resultado))
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
         }
+        return listaProductos = FXColections.observableArrayList()
     }
 }
