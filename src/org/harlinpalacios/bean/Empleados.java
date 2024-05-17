@@ -4,7 +4,7 @@ public class Empleados {
    private int codigoEmpleados;
    private String nombreEmpleado;
    private String apellidoEmpleado;
-   private Boolean sueldo;
+   private Double sueldo;
    private String direccion;
    private String turno;
    private int codigoCargoEm;
@@ -13,14 +13,14 @@ public Empleados(){
     
 }
 
-    public Empleados(int codigoEmpleados, String nombreEmpleado, String apellidoEmpleado, Boolean sueldo, String direccion, String turno, int codigoCargoEm) {
+    public Empleados(int codigoEmpleados, String nombreEmpleado, String apellidoEmpleado, Double sueldo, String direccion, String turno, int codigoCargoEm) {
         this.codigoEmpleados = codigoEmpleados;
         this.nombreEmpleado = nombreEmpleado;
         this.apellidoEmpleado = apellidoEmpleado;
         this.sueldo = sueldo;
-        this.direccion = direccion; 
+        this.direccion = direccion;
         this.turno = turno;
-        this.codigoCargoEm =codigoCargoEm;
+        this.codigoCargoEm = codigoCargoEm;
     }
 
     public int getCodigoEmpleados() {
@@ -47,11 +47,11 @@ public Empleados(){
         this.apellidoEmpleado = apellidoEmpleado;
     }
 
-    public Boolean isSueldo() {
+    public Double getSueldo() {
         return sueldo;
     }
 
-    public void setSueldo(Boolean sueldo) {
+    public void setSueldo(Double sueldo) {
         this.sueldo = sueldo;
     }
 
@@ -78,6 +78,8 @@ public Empleados(){
     public void setCodigoCargoEm(int codigoCargoEm) {
         this.codigoCargoEm = codigoCargoEm;
     }
+
+    
 
     
     

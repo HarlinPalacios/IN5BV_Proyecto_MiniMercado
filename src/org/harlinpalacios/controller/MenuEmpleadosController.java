@@ -93,7 +93,7 @@ public class MenuEmpleadosController implements Initializable{
         txtCodigoE.setText(String.valueOf(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getCodigoEmpleados()));
         txtNombreE.setText(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getNombreEmpleado());
         txtApellidoE.setText(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getApellidoEmpleado());
-        txtSueldo.setText(String.valueOf(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).isSueldo()));
+        txtSueldo.setText(String.valueOf(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getSueldo()));
         txtDireccion.setText(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getDireccion());
         txtTurno.setText(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getTurno());
         txtCodigoDeCargo.setText(String.valueOf(((Empleados)tblEmpleados.getSelectionModel().getSelectedItem()).getCodigoCargoEm()));
@@ -103,13 +103,13 @@ public class MenuEmpleadosController implements Initializable{
     public ObservableList<Empleados> getEmpleados (){
         ArrayList<Empleados> Lista = new ArrayList<>();
         try{
-           PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarEmpleados()}");
+           PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("call sp_ListarEmpleados()");
            ResultSet resultado = procedimiento.executeQuery();
            while (resultado.next()){
                Lista.add(new Empleados (resultado.getInt("codigoEmpleados"),
                                        resultado.getString("nombreEmpleado"),
                                        resultado.getString("apellidoEmpleado"),
-                                       resultado.getBoolean("sueldo"),
+                                       resultado.getDouble("sueldo"),
                                        resultado.getString("direccion"),
                                        resultado.getString("turno"),
                                        resultado.getInt("codigoCargoEm") 
@@ -154,16 +154,16 @@ public class MenuEmpleadosController implements Initializable{
         registro.setCodigoEmpleados(Integer.parseInt(txtCodigoE.getText()));
         registro.setNombreEmpleado(txtNombreE.getText());
         registro.setApellidoEmpleado(txtApellidoE.getText());
-        registro.setSueldo(Boolean.parseBoolean(txtSueldo.getText()));
+        registro.setSueldo(Double.parseDouble(txtSueldo.getText()));
         registro.setDireccion(txtDireccion.getText());
         registro.setTurno(txtTurno.getText());
         registro.setCodigoCargoEm(Integer.parseInt(txtCodigoDeCargo.getText()));
         try{
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarEmppleado(?, ?, ?, ?, ?, ?, ?)}");
-            procedimiento.setInt(1, registro.getCodigoEmpleados());
+            procedimiento.setInt(1, registro.getCodigoCargoEm());
             procedimiento.setString(2, registro.getNombreEmpleado());
             procedimiento.setString(3, registro.getApellidoEmpleado());
-            procedimiento.setBoolean(4, registro.isSueldo());
+            procedimiento.setDouble(4, registro.getSueldo());
             procedimiento.setString(5, registro.getDireccion());
             procedimiento.setString(6, registro.getTurno());
             procedimiento.setInt(7, registro.getCodigoCargoEm());
@@ -250,13 +250,13 @@ public class MenuEmpleadosController implements Initializable{
             Empleados registro = (Empleados)tblEmpleados.getSelectionModel().getSelectedItem();
             registro.setNombreEmpleado(txtNombreE.getText());
             registro.setApellidoEmpleado(txtApellidoE.getText());
-            registro.setSueldo(Boolean.parseBoolean(txtSueldo.getText()));
+            registro.setSueldo(Double.parseDouble(txtSueldo.getText()));
             registro.setDireccion(txtDireccion.getText());
             registro.setTurno(txtTurno.getText());
             procedimiento.setInt(1, registro.getCodigoEmpleados());
             procedimiento.setString(2, registro.getNombreEmpleado());
             procedimiento.setString(3, registro.getApellidoEmpleado());
-            procedimiento.setBoolean(4, registro.isSueldo());
+            procedimiento.setDouble(4, registro.getSueldo());
             procedimiento.setString(5, registro.getDireccion());
             procedimiento.setString(6, registro.getTurno());
             procedimiento.setInt(7, registro.getCodigoCargoEm());

@@ -1,22 +1,17 @@
 package org.harlinpalacios.bean;
 
+import java.time.LocalDate;
+
 public class Compras {
    private int numeroDocumento;
-   private String fechaDocumento;
-   private String descripcionCompras;
-   private Boolean totalDocumento;
+   private LocalDate  fechaDocumento;
+   private String descripcion;
+   private String totalDocumento;
    
     
 public Compras(){
     
 }
-
-    public Compras(int numeroDocumento, String fechaDocumento, String descripcionCompras, Boolean totalDocumento) {
-        this.numeroDocumento = numeroDocumento;
-        this.fechaDocumento = fechaDocumento;
-        this.descripcionCompras = descripcionCompras;
-        this.totalDocumento = totalDocumento;
-    }
 
     public int getNumeroDocumento() {
         return numeroDocumento;
@@ -26,32 +21,36 @@ public Compras(){
         this.numeroDocumento = numeroDocumento;
     }
 
-    public String getFechaDocumento() {
+    public LocalDate getFechaDocumento() {
         return fechaDocumento;
     }
 
-    public void setFechaDocumento(String fechaDocumento) {
+    public void setFechaDocumento(LocalDate fechaDocumento) {
         this.fechaDocumento = fechaDocumento;
     }
 
-    public String getDescripcionCompras() {
-        return descripcionCompras;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescripcionCompras(String descripcionCompras) {
-        this.descripcionCompras = descripcionCompras;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public Boolean isTotalDocumento() {
+    public String getTotalDocumento() {
         return totalDocumento;
     }
 
-    public void setTotalDocumento(Boolean totalDocumento) {
+    public void setTotalDocumento(String totalDocumento) {
         this.totalDocumento = totalDocumento;
     }
 
-
-    
+    public Compras(int numeroDocumento, LocalDate fechaDocumento, String descripcion, String totalDocumento) {
+        this.numeroDocumento = numeroDocumento;
+        this.fechaDocumento = fechaDocumento;
+        this.descripcion = descripcion;
+        this.totalDocumento = totalDocumento;
+    }
 
     
 

@@ -28,7 +28,7 @@ create table Proveedores(
 
 create table Compras(
 	numeroDocumento int not null,
-    fechaDocumemnto date,
+    fechaDocumento date,
     descripcion varchar(100),
     totalDocumento decimal(10,2),
     primary key PK_numedoDocumento(numeroDocumento)
@@ -315,10 +315,10 @@ call sp_ListarProveedores();
 -- /////////////////////////////////////////////////////Procedimiento Almacenado////////////////////////////////////////////////////// 
 -- *********************************************************Agregar Compras************************************************************
 Delimiter $$
-	create procedure sp_AgregarCompra(in numeroDocumento int, in fechaDocumemnto date,in descripcion varchar(100), in totalDocumento decimal(10,2))
+	create procedure sp_AgregarCompra(in numeroDocumento int, in fechaDocumento date,in descripcion varchar(100), in totalDocumento decimal(10,2))
 	begin
-		insert into Compras (numeroDocumento, fechaDocumemnto, descripcion, totalDocumento) values 
-        (numeroDocumento, fechaDocumemnto, descripcion, totalDocumento);
+		insert into Compras (numeroDocumento, fechaDocumento, descripcion, totalDocumento) values 
+        (numeroDocumento, fechaDocumento, descripcion, totalDocumento);
 	End $$
 Delimiter ;
 
@@ -332,7 +332,7 @@ Delimiter $$
 	Begin
 		select
         D.numeroDocumento,
-        D.fechaDocumemnto,
+        D.fechaDocumento,
         D.descripcion,
         D.totalDocumento
         from Compras D;
@@ -347,7 +347,7 @@ Delimiter $$
     Begin 
 		select
         D.numeroDocumento,
-        D.fechaDocumemnto,
+        D.fechaDocumento,
         D.descripcion,
         D.totalDocumento
         from Compras D
@@ -376,7 +376,7 @@ Delimiter $$
 			update Compras D
 				set
 			D.numeroDocumento = numeroD,
-			D.fechaDocumemnto = fechaD,
+			D.fechaDocumento = fechaD,
 			D.descripcion = descrp,
 			D.totalDocumento = totalD
             where numeroDocumento = numeroD;
@@ -554,7 +554,8 @@ Delimiter $$
         G.apellidoEmpleado,
         G.sueldo,
         G.direccion,
-        G.turno
+        G.turno,
+        G.codigoCargoEm
         from Empleados G;
 	End $$
 Delimiter ;
@@ -571,7 +572,8 @@ Delimiter $$
         G.apellidoEmpleado,
         G.sueldo,
         G.direccion,
-        G.turno
+        G.turno,
+        G.codigoCargoEm
         from Empleados G
         where Empleado = empleID;
 	End $$
@@ -642,7 +644,7 @@ Delimiter ;
 
 call sp_ListarFacturas();
 
-/*
+
 -- ***********************************************************Buscar Factura*******************************************************
 Delimiter $$
 	create procedure sp_BuscarFactura(in factuID int)
@@ -654,12 +656,12 @@ Delimiter $$
         H.codigoCliente,
         H.codigoEmpleados
         from Facturas H
-        where Facturas = factuID;
+        where codigoFactura = factuID;
 	End $$
 Delimiter ;
 
 call sp_BuscarFactura(1);
-*/
+
 -- ***********************************************************Eliminar Factura*****************************************************
 Delimiter $$
 create procedure sp_EliminarFactura(in factuID int)
@@ -694,10 +696,10 @@ call sp_ListarFacturas();
 -- ////////////////////////////////////////////////////////Procedimiento Almacenado De Facturas//////////////////////////////////////////////////
 -- ***********************************************************Agregar Productos******************************************************
 Delimiter $$
-		create procedure sp_AgregarProductos(in codigoProductos  int, in decripcionProducto varchar(100), in precioUnitario decimal(10,2), in precioDocena decimal(10,2), in precioMayor decimal(10,2), imagenProducto varchar(25), in existencia int, in codigoTipoPro int, in codigoProveedores int)
+		create procedure sp_AgregarProductos(in codigoProductos  int, in descripcionProducto varchar(100), in precioUnitario decimal(10,2), in precioDocena decimal(10,2), in precioMayor decimal(10,2), imagenProducto varchar(25), in existencia int, in codigoTipoPro int, in codigoProveedores int)
 	Begin
-		insert into Productos (codigoProductos,  decripcionProducto, precioUnitario, precioDocena, precioMayor, imagenProducto, existencia, codigoTipoPro, codigoProveedores)
-		values (codigoProductos,  decripcionProducto, precioUnitario, precioDocena, precioMayor, imagenProducto, existencia, codigoTipoPro, codigoProveedores);
+		insert into Productos (codigoProductos,  descripcionProducto, precioUnitario, precioDocena, precioMayor, imagenProducto, existencia, codigoTipoPro, codigoProveedores)
+		values (codigoProductos,  descripcionProducto, precioUnitario, precioDocena, precioMayor, imagenProducto, existencia, codigoTipoPro, codigoProveedores);
 	End $$ 
 Delimiter ;
 
@@ -711,7 +713,7 @@ Delimiter $$
 	Begin
 		select
         I.codigoProductos,
-        I.decripcionProducto,
+        I.descripcionProducto,
         I.precioUnitario,
         I.precioDocena,
         I.precioMayor,
@@ -727,11 +729,11 @@ call sp_ListarProductos();
 
 -- ***********************************************************Buscar Producto********************************************************
 Delimiter $$
-	create procedure sp_BuscarProducto(in produID int)
+	create procedure sp_BuscarProducto(in prodID int)
     Begin 
 		select
         I.codigoProductos,
-        I.decripcionProducto,
+        I.descripcionProducto,
         I.precioUnitario,
         I.precioDocena,
         I.precioMayor,
@@ -740,7 +742,7 @@ Delimiter $$
         I.codigoTipoPro,
         I.codigoProveedores
         from Productos I
-        where Productos = produID;
+        where codigoProductos = prodID;
 	End $$
 Delimiter ;
 
@@ -751,7 +753,7 @@ Delimiter $$
 create procedure sp_EliminarProductos(in produID int)
     Begin 
 		delete from Productos
-			where codigoFactura = produID;
+			where codigoProductos = produID;
 		End $$
 Delimiter ;
 
@@ -759,12 +761,12 @@ call sp_EliminarProductos(2);
 call sp_ListarProductos();
 -- ***********************************************************Editar Producto********************************************************
 Delimiter $$
-	create procedure sp_EditarProducto(in codigoProdu  int, in decripcionProdu varchar(100), in precioUnita decimal(10,2), in precioDoce decimal(10,2), in precioMay decimal(10,2), imagenProdu varchar(25), in exis int, in codigoTiPro int, in codigoProve int)
+	create procedure sp_EditarProducto(in codigoProdu  int, in descripcionProdu varchar(100), in precioUnita decimal(10,2), in precioDoce decimal(10,2), in precioMay decimal(10,2), imagenProdu varchar(25), in exis int, in codigoTiPro int, in codigoProve int)
 		Begin 
 			update Productos I
 				set
 			I.codigoProductos = codigoProdu,
-			I.decripcionProducto = decripcionProdu,
+			I.descripcionProducto = descripcionProdu,
 			I.precioUnitario = precioUnita,
 			I.precioDocena = precioDoce,
 			I.precioMayor = precioMay,

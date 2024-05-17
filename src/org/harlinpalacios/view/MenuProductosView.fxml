@@ -39,18 +39,18 @@
             <Label text="Descripcion Producto" GridPane.rowIndex="1" />
             <Label text="Precio Unitario" GridPane.rowIndex="2" />
             <Label text="Precio Docena" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="txtCodigoProd" onAction="#agregar" GridPane.columnIndex="1" />
+            <TextField fx:id="txtDescPro" onAction="#agregar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPrecioU" onAction="#agregar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtPrecioD" onAction="#agregar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Precio Mayor" GridPane.columnIndex="2" />
             <Label text="Existencia " GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label text="Codigo Tio Producto" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label text="Codigo Proveedores" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="3" />
-            <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <ComboBox prefHeight="25.0" prefWidth="292.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <ComboBox prefHeight="25.0" prefWidth="289.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <TextField fx:id="txtPrecioM" onAction="#agregar" GridPane.columnIndex="3" />
+            <TextField fx:id="txtExistencia" onAction="#agregar" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cmbCodigoTipoP" onAction="#agregar" prefHeight="25.0" prefWidth="292.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cmbCodProv" onAction="#agregar" prefHeight="25.0" prefWidth="289.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <GridPane layoutX="22.0" layoutY="187.0" prefHeight="151.0" prefWidth="79.0">
@@ -64,22 +64,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Agregar" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Eliminar" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Actualizar" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Reporte" GridPane.rowIndex="3" />
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="30.0" prefWidth="70.0" text="Agregar" />
+            <Button fx:id="btnEliminar" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Eliminar" GridPane.rowIndex="1" />
+            <Button fx:id="btnEditar" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Actualizar" GridPane.rowIndex="2" />
+            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Reporte" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-      <TableView layoutX="132.0" layoutY="183.0" prefHeight="160.0" prefWidth="692.0">
+      <TableView fx:id="tblProductos" layoutX="132.0" layoutY="183.0" onMouseClicked="#seleccionarElementos" prefHeight="160.0" prefWidth="692.0">
         <columns>
-          <TableColumn prefWidth="89.0" text="CodigoProducto" />
-          <TableColumn prefWidth="101.0" text="Descripcion" />
-            <TableColumn prefWidth="89.0" text="Precio_Unitario" />
-            <TableColumn prefWidth="78.0" text="Precio_Docena" />
-            <TableColumn prefWidth="75.0" text="Precio_Mayor" />
-            <TableColumn prefWidth="66.0" text="Existencia" />
-            <TableColumn prefWidth="91.0" text="Codigo_Producto" />
-            <TableColumn prefWidth="102.0" text="Codigo_Proveedor" />
+          <TableColumn fx:id="colCodProd" prefWidth="89.0" text="CodigoProducto" />
+          <TableColumn fx:id="colDescProd" prefWidth="101.0" text="Descripcion" />
+            <TableColumn fx:id="colPrecioU" prefWidth="89.0" text="Precio_Unitario" />
+            <TableColumn fx:id="colPrecioD" prefWidth="78.0" text="Precio_Docena" />
+            <TableColumn fx:id="colPrecioM" prefWidth="75.0" text="Precio_Mayor" />
+            <TableColumn fx:id="colExistencia" prefWidth="66.0" text="Existencia" />
+            <TableColumn fx:id="colCodTipoProd" prefWidth="91.0" text="Codigo_Producto" />
+            <TableColumn fx:id="colCodProv" prefWidth="102.0" text="Codigo_Proveedor" />
         </columns>
       </TableView>
    </children>
