@@ -14,17 +14,6 @@ create table Clientes(
 	primary key PK_codigoCliente(codigoCliente)
 );
 
-create table Proveedores(
-	codigoProveedores int not null,
-	NITProveedor varchar(10) not null,
-	nombreProveedor varchar(50) not null,
-	apellidoProveedor varchar(50) not null,
-	direccionProveedor varchar(60),
-	razonSocial varchar(60),
-	contactoPrincipal varchar(100), 
-	paginaWeb varchar(50),
-	primary key PK_codigoProveedores(codigoProveedores)
-);
 
 create table Compras(
 	numeroDocumento int not null,
@@ -47,6 +36,37 @@ create table CargoEmpleado(
     nombreCargo varchar(30) not null,
     descripcionCargo varchar(100) not null,
     primary key PK_codigoCargoEm(codigoCargoEm)
+);
+
+create table TelefonoProveedores(
+	codigoTelefonoProveedor int not null,
+	numeroPrincipal varchar(8) not null,
+	numeroSecundario varchar(8) not null,
+	observaciones varchar(45) not null,
+	primary key PK_codigoTelefonoProve(codigoTelefonoProveedor)
+);
+
+create table EmailProveedores(
+	codigoEmailProveedor int not null,
+    emailProveedor varchar(50) not null,
+    descripcion varchar(100) not null,
+	primary key PK_codigoEmailProveedor(codigoEmailProveedor)
+);
+
+create table Proveedores(
+	codigoProveedores int not null,
+	NITProveedor varchar(10) not null,
+	nombreProveedor varchar(50) not null,
+	apellidoProveedor varchar(50) not null,
+	direccionProveedor varchar(60),
+	razonSocial varchar(60),
+	contactoPrincipal varchar(100), 
+	paginaWeb varchar(50),
+    -- codigoTelefonoProveedor int not null,
+    -- codigoEmailProveedor int not null,
+	primary key PK_codigoProveedores(codigoProveedores)
+    -- foreign key FK_codigoTelefonoProveedor(codigoTelefonoProveedor) references TelefonoProveedores(codigoTelefonoProveedor),
+    -- foreign key FK_codigoEmailProveedor(codigoEmailProveedor) references EmailProveedores(codigoEmailProveedor)
 );
 
 create table Empleados(
@@ -87,16 +107,16 @@ create table Productos(
 	foreign key FK_codigoTipoPro(codigoTipoPro) references TipoProducto(codigoTipoPro),
 	foreign key FK_codigoProveedores(codigoProveedores) references Proveedores(codigoProveedores)
 );
-/*
+
 create table DetallesCompra(
 	codigoDetalles int not null,
 	costoUnitario decimal(10,2) not null,
 	cantidad int,
     codigoProductos int not null,
-	numedoDocumento int not null,
+	numeroDocumento int not null,
 	primary key PK_codigoDetalles(codigoDetalles),
 	foreign key FK_codigoProductos(codigoProductos) references Productos(codigoProductos),
-	foreign key FK_numedoDocumento(numedoDocumento) references Compras(numedoDocumento)
+	foreign key FK_numeroDocumento(numeroDocumento) references Compras(numeroDocumento)
 );
 
 
@@ -106,22 +126,12 @@ create table DetalleFactura(
 	precioUnitario decimal(10,2) not null,
 	cantidad int,
     codigoFactura int not null,
-	codigoProductos int not null,
 	primary key PK_codigoDetalleFac(codigoDetalleFac),
-	foreign key FK_codigoFactura(codigoFactura) references Facturas(codigoFactura),
-	foreign key FK_codigoProductos(codigoProductos) references Productos(codigoProductos)
+	foreign key FK_codigoFactura(codigoFactura) references Facturas(codigoFactura)
 );  
 
-create table TelefonoProveedores(
-	codigoTelefonoProve int not null,
-	numeroPrincipal varchar(8) not null,
-	numeroSecundario varchar(8) not null,
-	obcervaciones varchar(45) not null,
-	codigoProveedores int not null,
-	primary key PK_codigoTelefonoProve(codigoTelefonoProve),
-	foreign key FK_codigoProveedores(codigoProveedores) references Proveedores(codigoProveedores)
-);
-*/
+
+
 
   -- /////////////////////////////////////////////////////Procedimiento Almacenado/////////////////////////////////////////////////
   -- ////////////////////////////////////////////////////////////Clientes//////////////////////////////////////////////////////////
@@ -218,99 +228,6 @@ call sp_ListarClientes();
     
     
     
--- ////////////////////////////////////////////////////////////Proveedores//////////////////////////////////////////////////////////
--- /////////////////////////////////////////////////////////AgregarProveedores//////////////////////////////////////////////////////
-Delimiter $$
-	create procedure sp_AgregarProveedores(in codigoProveedores int, in NITProveedor varchar(10), in nombreProveedor varchar(50),
-    in apellidoProveedor varchar(50), in direccionProveedor varchar(60), in razonSocial varchar(60), in contactoPrincipal varchar
-    (100), in paginaWeb varchar(50))
-		Begin 
-			 Insert into Proveedores (codigoProveedores, NITProveedor, nombreProveedor, apellidoProveedor, direccionProveedor, 
-             razonSocial , contactoPrincipal, paginaWeb )values
-             (codigoProveedores, NITProveedor, nombreProveedor, apellidoProveedor, direccionProveedor, razonSocial , 
-             contactoPrincipal, paginaWeb );
-		End $$
-Delimiter ;
-
-call sp_AgregarProveedores(1,'124585003','Alexander','Sales','San Pedro','Sony','21549832','AlexanderS_gt');
-call sp_AgregarProveedores(2,'124581250','Kellyo','Tasha','Estados Unidos','Bando Estado Unidence','45872100','Tasha.com.gt');
-call sp_AgregarProveedores(3,'124582340','Kardasha','Selia','New Olanda','Bando Estado','45823100','Selia.com.gt');
-
-   
--- ****************************************************Listar Proveedores*******************************************
-Delimiter $$
-	create procedure sp_ListarProveedores()
-		Begin 
-			select
-            B.codigoProveedores,
-			B.NITProveedor,
-			B.nombreProveedor,
-			B.apellidoProveedor,
-			B.direccionProveedor,
-			B.razonSocial ,
-			B.contactoPrincipal, 
-			B.paginaWeb
-			from Proveedores B;
-		End $$
-Delimiter ;
-
-call sp_ListarProveedores();
-
--- ***********************************************Buscar Proveedores**********************************
-Delimiter $$
-	create procedure sp_BuscarProveedores(in prID int)
-		Begin 
-			select
-			B.codigoProveedores,
-			B.NITProveedor,
-			B.nombreProveedor,
-			B.apellidoProveedor,
-			B.direccionProveedor,
-			B.razonSocial ,
-			B.contactoPrincipal, 
-			B.paginaWeb
-			from Proveedores B
-            where codigoProveedores = prID;
-		End $$
-Delimiter ;
-        
-call sp_BuscarProveedores(1);
-
--- ****************************************************Eliminar Proveedores*******************************************************        
-Delimiter $$
-	create procedure sp_EliminarProveedores(in prove int)
-		Begin 
-			delete from Proveedores
-				where codigoProveedores = prove;
-		End $$
-Delimiter ;
-
-call sp_EliminarProveedores(1);
-call sp_ListarProveedores();
-
--- *******************************************************Editar Proveedores*************************************************
-Delimiter $$
-	create procedure sp_EditarProveedores(in codiProve int, in NProve varchar(10), in nomProve varchar(50),
-    in apeProve varchar(50), in direcProve varchar(60), in raSocial varchar(60), in contacPrin varchar
-    (100), in pagWeb varchar(50))
-		Begin 
-			update Proveedores B
-				set
-			B.codigoProveedores= codiProve,
-			B.NITProveedor = NProve,
-			B.nombreProveedor = nomProve,
-			B.apellidoProveedor = apeProve,
-			B.direccionProveedor = direcProve,
-			B.razonSocial = raSocial,
-			B.contactoPrincipal = contacPrin, 
-			B.paginaWeb = pagWeb
-            where codigoProveedores = codiProve;
-		End $$
-Delimiter ;
-
-call sp_EditarProveedores(2,'5412322008','Thomas','Delincuente','Acienda Las Flores','Loco','54872100','DeliThomas.gt');
-call sp_ListarProveedores();
-
 
 -- /////////////////////////////////////////////////////Procedimiento Almacenado////////////////////////////////////////////////////// 
 -- *********************************************************Agregar Compras************************************************************
@@ -388,7 +305,7 @@ call sp_ListarCompras();
 
 
 -- //////////////////////////////////////////////////////////Procedimiento Almacenado////////////////////////////////////////////////////
--- ***************************************************************Agregar Cargos*********************************************************
+-- ***************************************************************Agregar Cargo Empleados*********************************************************
 Delimiter $$
 	create procedure sp_AgregarCargo(in codigoCargoEm  int, in nombreCargo varchar(30), in descripcionCargo varchar(100))
 	Begin
@@ -403,7 +320,7 @@ call sp_AgregarCargo(3, 'Chicles', 'Compra tu mejor chicle, el que mas te guste'
 
 
 
--- ******************************************************************Listar Cargos*******************************************************
+-- ******************************************************************Listar Cargo Empleado*******************************************************
 Delimiter $$
 	create procedure sp_ListarCargo()
 	Begin
@@ -417,7 +334,7 @@ Delimiter ;
 
 call sp_ListarCargo();
 
--- ***********************************************************Buscar Cargos**************************************************
+-- ***********************************************************Buscar Cargo Empleado**************************************************
 Delimiter $$
 	create procedure sp_BuscarCargo(in carID int)
     Begin 
@@ -432,7 +349,7 @@ Delimiter ;
 
 call sp_BuscarCargo(2);
 
--- ***********************************************************Eliminar Cargos************************************
+-- ***********************************************************Eliminar Cargo Empleado************************************
 Delimiter $$
 create procedure sp_EliminarCargo(in carID int)
     Begin 
@@ -444,7 +361,7 @@ Delimiter ;
 call sp_EliminarCargo(2);
 call sp_ListarCargo();
 
--- ************************************************************Editar Cargos**************************************
+-- ************************************************************Editar Cargo Empleado**************************************
 Delimiter $$
 	create procedure sp_EditarCargo(in codiCar int, in nomCar varchar(30), in desCar varchar(100))
 		Begin 
@@ -459,6 +376,251 @@ Delimiter ;
 
 call sp_EditarCargo(1,'Vino', 'EL mejor vido de Guatemala');
 call sp_ListarCargo();
+
+
+-- /////////////////////////////////////////////////////////////Procedimeinto Almacenado////////////////////////////////////////////////////
+-- ************************************************************Agregar Telefono Proveedor***************************************************
+Delimiter $$
+	create procedure sp_AgregarTelefonoPro(in codigoTelefonoProveedor  int, in numeroPrincipal varchar(8), in numeroSecundario varchar(8), in observaciones varchar(45))
+	Begin
+		insert into TelefonoProveedores (codigoTelefonoProveedor, numeroPrincipal, numeroSecundario,observaciones)
+		values (codigoTelefonoProveedor, numeroPrincipal, numeroSecundario,observaciones);
+	End $$ 
+Delimiter ;
+
+call sp_AgregarTelefonoPro(1, 12345634, 47584937, 'Exelente Proveedor');
+call sp_AgregarTelefonoPro(2, 47592457, 77593472, 'Exelente Proveedor');
+call sp_AgregarTelefonoPro(3, 75824593, 74860473, 'Mal Proveedor');
+
+-- *************************************************************Listar Telefono Proveedor***************************************************
+Delimiter $$
+	create procedure sp_ListarTelefonoPro()
+	Begin
+		select
+        Z.codigoTelefonoProveedor,
+        Z.numeroPrincipal,
+        Z.numeroSecundario,
+        Z.observaciones
+        from TelefonoProveedores Z;
+	End $$
+Delimiter ;
+
+call sp_ListarTelefonoPro();
+
+-- *************************************************************Buscar Telefono Proveedor***************************************************
+Delimiter $$
+	create procedure sp_BuscarTelefonoPro(in teleProID int)
+    Begin 
+		select
+        Z.codigoTelefonoProveedor,
+        Z.numeroPrincipal,
+        Z.numeroSecundario,
+        Z.observaciones
+        from TelefonoProveedores Z
+        where codigoTelefonoProveedor = teleProID;
+	End $$
+Delimiter ;
+
+call sp_BuscarTelefonoPro(2);
+-- ************************************************************Eliminar Telefono Proveedor**************************************************
+Delimiter $$
+create procedure sp_EliminarTelefonoPro(in teleProID int)
+    Begin 
+		delete from TelefonoProveedores
+			where codigoTelefonoProveedor = teleProID;
+		End $$
+Delimiter ;
+
+call sp_EliminarTelefonoPro(3);
+call sp_ListarTelefonoPro();
+-- *************************************************************Editar Telefono Proveedor***************************************************
+Delimiter $$
+	create procedure sp_EditarTelefonoPro(in codiTelePro int, in numePri varchar(8), in numeSec varchar(8), in obser varchar(100))
+		Begin 
+			update TelefonoProveedores Z
+				set
+			Z.codigoTelefonoProveedor = codiTelePro,
+			Z.numeroPrincipal = numePri,
+			Z.numeroSecundario = numeSec,
+			Z.observaciones = obser
+            where codigoTelefonoProveedor  = codiTelePro;
+		End $$
+Delimiter ;
+
+call sp_EditarTelefonoPro(1, 65849634, 87457483, 'Mal Proveedor');
+call sp_ListarTelefonoPro();
+
+-- ////////////////////////////////////////////////////////////Procedimiento Almacenado////////////////////////////////////////////////////
+-- *************************************************************Agregar EmailProveedor*****************************************************
+Delimiter $$
+	create procedure sp_AgregarEmailPro(in codigoEmailProveedor  int, in emailProveedor varchar(50), in descripcion varchar(100))
+	Begin
+		insert into EmailProveedores (codigoEmailProveedor, emailProveedor,descripcion)
+		values (codigoEmailProveedor, emailProveedor,descripcion);
+	End $$ 
+Delimiter ;
+
+call sp_AgregarEmailPro(1, 'alexanderS34@gmail.com', 'Es alto, Morenito, de pelo lacio');
+call sp_AgregarEmailPro(2, 'KTasha@gmail.com', 'Es de piel Blanca, pelo Castaño');
+call sp_AgregarEmailPro(3, 'KarSalia042@gmail.com', 'Tiene varios liunares en la cara, de piel morena');
+
+-- **************************************************************Listar EmailProveedor*****************************************************
+Delimiter $$
+	create procedure sp_ListarEmialPro()
+	Begin
+		select
+        H.codigoEmailProveedor,
+        H.emailProveedor,
+        H.descripcion
+        from EmailProveedores H;
+	End $$
+Delimiter ;
+
+call sp_ListarEmialPro();
+
+-- **************************************************************Buscar EmailProveedor*****************************************************
+Delimiter $$
+	create procedure sp_BuscarEmailPro(in emaProID int)
+    Begin 
+		select
+        H.codigoEmailProveedor,
+        H.emailProveedor,
+        H.descripcion
+        from EmailProveedores H
+        where codigoEmailProveedor = emaProID;
+	End $$
+Delimiter ;
+
+call sp_BuscarEmailPro(3);
+
+-- *************************************************************Eliminar EmailProveedor****************************************************
+Delimiter $$
+create procedure sp_EliminarEmailPro(in emaProID int)
+    Begin 
+		delete from EmailProveedores
+			where codigoEmailProveedor = emaProID;
+		End $$
+Delimiter ;
+
+call sp_EliminarEmailPro(3);
+call sp_ListarEmialPro();
+
+-- **************************************************************Editar EmailProveedor*****************************************************
+Delimiter $$
+	create procedure sp_EditarEmailPro(in codiEmaProv  int, in emaProve varchar(50), in descri varchar(100))
+		Begin 
+			update EmailProveedores H
+				set
+			H.codigoEmailProveedor = codiEmaProv,
+			H.emailProveedor = emaProve,
+			H.descripcion = descri
+            where codigoEmailProveedor  = codiEmaProv;
+		End $$
+Delimiter ;
+
+call sp_EditarEmailPro(1, 'tasK@gmail.com', 'Es alta y tiene el pelo pequeño');
+call sp_ListarEmialPro();
+
+-- ////////////////////////////////////////////////////////////Proveedores//////////////////////////////////////////////////////////
+-- /////////////////////////////////////////////////////////AgregarProveedores//////////////////////////////////////////////////////
+Delimiter $$
+	create procedure sp_AgregarProveedores(in codigoProveedores int, in NITProveedor varchar(10), in nombreProveedor varchar(50),
+    in apellidoProveedor varchar(50), in direccionProveedor varchar(60), in razonSocial varchar(60), in contactoPrincipal varchar
+    (100), in paginaWeb varchar(50), in codigoTelefonoProveedor int, in codigoEmailProveedor int)
+		Begin 
+			 Insert into Proveedores (codigoProveedores, NITProveedor, nombreProveedor, apellidoProveedor, direccionProveedor, 
+             razonSocial , contactoPrincipal, paginaWeb, codigoTelefonoProveedor, codigoEmailProveedor)values
+             (codigoProveedores, NITProveedor, nombreProveedor, apellidoProveedor, direccionProveedor, razonSocial , 
+             contactoPrincipal, paginaWeb, codigoTelefonoProveedor, codigoEmailProveedor);
+		End $$
+Delimiter ;
+
+call sp_AgregarProveedores(1,'124585003','Alexander','Sales','San Pedro','Sony','21549832','AlexanderS_gt',2, 1);
+call sp_AgregarProveedores(2,'124581250','Kellyo','Tasha','Estados Unidos','Bando Estado Unidence','45872100','Tasha.com.gt', 2, 1);
+call sp_AgregarProveedores(3,'124582340','Kardasha','Selia','New Olanda','Bando Estado','45823100','Selia.com.gt',1, 2); 
+
+   
+-- ****************************************************Listar Proveedores*******************************************
+Delimiter $$
+	create procedure sp_ListarProveedores()
+		Begin 
+			select
+            B.codigoProveedores,
+			B.NITProveedor,
+			B.nombreProveedor,
+			B.apellidoProveedor,
+			B.direccionProveedor,
+			B.razonSocial ,
+			B.contactoPrincipal, 
+			B.paginaWeb,
+            B.codigoTelefonoProveedor,
+            B.codigoEmailProveedor
+			from Proveedores B;
+		End $$
+Delimiter ;
+
+call sp_ListarProveedores();
+
+-- ***********************************************Buscar Proveedores**********************************
+Delimiter $$
+	create procedure sp_BuscarProveedores(in prID int)
+		Begin 
+			select
+			B.codigoProveedores,
+			B.NITProveedor,
+			B.nombreProveedor,
+			B.apellidoProveedor,
+			B.direccionProveedor,
+			B.razonSocial ,
+			B.contactoPrincipal, 
+			B.paginaWeb,
+            B.codigoTelefonoProveedor,
+            B.codigoEmailProveedor
+			from Proveedores B
+            where codigoProveedores = prID;
+		End $$
+Delimiter ;
+        
+call sp_BuscarProveedores(1);
+
+-- ****************************************************Eliminar Proveedores*******************************************************        
+Delimiter $$
+	create procedure sp_EliminarProveedores(in prove int)
+		Begin 
+			delete from Proveedores
+				where codigoProveedores = prove;
+		End $$
+Delimiter ;
+
+call sp_EliminarProveedores(1);
+call sp_ListarProveedores();
+
+-- *******************************************************Editar Proveedores*************************************************
+Delimiter $$
+	create procedure sp_EditarProveedores(in codiProve int, in NProve varchar(10), in nomProve varchar(50),
+    in apeProve varchar(50), in direcProve varchar(60), in raSocial varchar(60), in contacPrin varchar
+    (100), in pagWeb varchar(50) , in codiTelefProver int, in codiEmaProve int)
+		Begin 
+			update Proveedores B
+				set
+			B.codigoProveedores= codiProve,
+			B.NITProveedor = NProve,
+			B.nombreProveedor = nomProve,
+			B.apellidoProveedor = apeProve,
+			B.direccionProveedor = direcProve,
+			B.razonSocial = raSocial,
+			B.contactoPrincipal = contacPrin, 
+			B.paginaWeb = pagWeb,
+            B.codigoTelefonoProveedor = codiTelefProver,
+            B.codigoEmailProveedor = codiEmaProve
+            where codigoProveedores = codiProve;
+		End $$
+Delimiter ;
+
+call sp_EditarProveedores(2,'5412322008','Thomas','Delincuente','Acienda Las Flores','Loco','54872100','DeliThomas.gt',1, 2);
+call sp_ListarProveedores();
+
+
 
 
 -- ///////////////////////////////////////////////////////Procedimeinto Almacenado/////////////////////////////////////////////////
