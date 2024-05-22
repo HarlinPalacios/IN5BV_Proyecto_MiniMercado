@@ -34,6 +34,7 @@ public class MenuProveedoresController implements Initializable {
     private ObservableList<Proveedores> listarProveedores;
     
     @FXML private Button btnRegresar;
+    
     @FXML private TextField txtCodigoP;
     @FXML private TextField txtNITP;
     @FXML private TextField txtNombreP;
@@ -42,6 +43,7 @@ public class MenuProveedoresController implements Initializable {
     @FXML private TextField txtRazonS;
     @FXML private TextField txtContactoP;
     @FXML private TextField txtPaginaW;
+    
     @FXML private TableView tblProveedores;
     @FXML private TableColumn colCodigoP;
     @FXML private TableColumn colNITP;
@@ -51,10 +53,12 @@ public class MenuProveedoresController implements Initializable {
     @FXML private TableColumn colRazonS;
     @FXML private TableColumn colContactoP;
     @FXML private TableColumn colPaginaW;
+    
     @FXML private Button btnAgregar;
     @FXML private Button btnEliminar;
     @FXML private Button btnEditar;
     @FXML private Button btnReporte;
+    
     @FXML private ImageView imgAgregar;
     @FXML private ImageView imgEliminar;
     @FXML private ImageView imgEditar;
@@ -67,7 +71,7 @@ public class MenuProveedoresController implements Initializable {
     }    
 
     public void cargarDatos(){
-        tblProveedores.setItems(getClientes());
+        tblProveedores.setItems(getProveedores());
         colCodigoP.setCellValueFactory(new PropertyValueFactory<Proveedores, Integer>("codigoProveedores"));
         colNITP.setCellValueFactory(new PropertyValueFactory<Proveedores, Integer>("NITProveedor"));
         colNombreP.setCellValueFactory(new PropertyValueFactory<Proveedores, Integer>("nombreProveedor"));
@@ -89,7 +93,7 @@ public class MenuProveedoresController implements Initializable {
         txtPaginaW.setText(((Proveedores)tblProveedores.getSelectionModel().getSelectedItem()).getPaginaWeb());
     }
     
-    public ObservableList<Proveedores> getClientes (){
+    public ObservableList<Proveedores> getProveedores (){
         // Variable lista                       
         ArrayList<Proveedores> lista = new ArrayList<>();
         // amnejo de excepcion

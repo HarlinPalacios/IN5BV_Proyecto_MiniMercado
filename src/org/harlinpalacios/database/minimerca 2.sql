@@ -62,11 +62,7 @@ create table Proveedores(
 	razonSocial varchar(60),
 	contactoPrincipal varchar(100), 
 	paginaWeb varchar(50),
-    -- codigoTelefonoProveedor int not null,
-    -- codigoEmailProveedor int not null,
 	primary key PK_codigoProveedores(codigoProveedores)
-    -- foreign key FK_codigoTelefonoProveedor(codigoTelefonoProveedor) references TelefonoProveedores(codigoTelefonoProveedor),
-    -- foreign key FK_codigoEmailProveedor(codigoEmailProveedor) references EmailProveedores(codigoEmailProveedor)
 );
 
 create table Empleados(
@@ -111,7 +107,7 @@ create table Productos(
 create table DetallesCompra(
 	codigoDetalles int not null,
 	costoUnitario decimal(10,2) not null,
-	cantidad int,
+	cantidad int not null,
     codigoProductos int not null,
 	numeroDocumento int not null,
 	primary key PK_codigoDetalles(codigoDetalles),
@@ -124,7 +120,7 @@ create table DetallesCompra(
 create table DetalleFactura(
 	codigoDetalleFac int not null,
 	precioUnitario decimal(10,2) not null,
-	cantidad int,
+	cantidad int not null,
     codigoFactura int not null,
 	primary key PK_codigoDetalleFac(codigoDetalleFac),
 	foreign key FK_codigoFactura(codigoFactura) references Facturas(codigoFactura)
@@ -526,18 +522,18 @@ call sp_ListarEmialPro();
 Delimiter $$
 	create procedure sp_AgregarProveedores(in codigoProveedores int, in NITProveedor varchar(10), in nombreProveedor varchar(50),
     in apellidoProveedor varchar(50), in direccionProveedor varchar(60), in razonSocial varchar(60), in contactoPrincipal varchar
-    (100), in paginaWeb varchar(50), in codigoTelefonoProveedor int, in codigoEmailProveedor int)
+    (100), in paginaWeb varchar(50))
 		Begin 
 			 Insert into Proveedores (codigoProveedores, NITProveedor, nombreProveedor, apellidoProveedor, direccionProveedor, 
-             razonSocial , contactoPrincipal, paginaWeb, codigoTelefonoProveedor, codigoEmailProveedor)values
+             razonSocial , contactoPrincipal, paginaWeb)values
              (codigoProveedores, NITProveedor, nombreProveedor, apellidoProveedor, direccionProveedor, razonSocial , 
-             contactoPrincipal, paginaWeb, codigoTelefonoProveedor, codigoEmailProveedor);
+             contactoPrincipal, paginaWeb);
 		End $$
 Delimiter ;
 
-call sp_AgregarProveedores(1,'124585003','Alexander','Sales','San Pedro','Sony','21549832','AlexanderS_gt',2, 1);
-call sp_AgregarProveedores(2,'124581250','Kellyo','Tasha','Estados Unidos','Bando Estado Unidence','45872100','Tasha.com.gt', 2, 1);
-call sp_AgregarProveedores(3,'124582340','Kardasha','Selia','New Olanda','Bando Estado','45823100','Selia.com.gt',1, 2); 
+call sp_AgregarProveedores(1,'124585003','Alexander','Sales','San Pedro','Sony','21549832','AlexanderS_gt');
+call sp_AgregarProveedores(2,'124581250','Kellyo','Tasha','Estados Unidos','Bando Estado Unidence','45872100','Tasha.com.gt');
+call sp_AgregarProveedores(3,'124582340','Kardasha','Selia','New Olanda','Bando Estado','45823100','Selia.com.gt'); 
 
    
 -- ****************************************************Listar Proveedores*******************************************
@@ -552,9 +548,7 @@ Delimiter $$
 			B.direccionProveedor,
 			B.razonSocial ,
 			B.contactoPrincipal, 
-			B.paginaWeb,
-            B.codigoTelefonoProveedor,
-            B.codigoEmailProveedor
+			B.paginaWeb
 			from Proveedores B;
 		End $$
 Delimiter ;
@@ -573,9 +567,7 @@ Delimiter $$
 			B.direccionProveedor,
 			B.razonSocial ,
 			B.contactoPrincipal, 
-			B.paginaWeb,
-            B.codigoTelefonoProveedor,
-            B.codigoEmailProveedor
+			B.paginaWeb
 			from Proveedores B
             where codigoProveedores = prID;
 		End $$
@@ -599,7 +591,7 @@ call sp_ListarProveedores();
 Delimiter $$
 	create procedure sp_EditarProveedores(in codiProve int, in NProve varchar(10), in nomProve varchar(50),
     in apeProve varchar(50), in direcProve varchar(60), in raSocial varchar(60), in contacPrin varchar
-    (100), in pagWeb varchar(50) , in codiTelefProver int, in codiEmaProve int)
+    (100), in pagWeb varchar(50))
 		Begin 
 			update Proveedores B
 				set
@@ -610,14 +602,12 @@ Delimiter $$
 			B.direccionProveedor = direcProve,
 			B.razonSocial = raSocial,
 			B.contactoPrincipal = contacPrin, 
-			B.paginaWeb = pagWeb,
-            B.codigoTelefonoProveedor = codiTelefProver,
-            B.codigoEmailProveedor = codiEmaProve
+			B.paginaWeb = pagWeb
             where codigoProveedores = codiProve;
 		End $$
 Delimiter ;
 
-call sp_EditarProveedores(2,'5412322008','Thomas','Delincuente','Acienda Las Flores','Loco','54872100','DeliThomas.gt',1, 2);
+call sp_EditarProveedores(2,'5412322008','Thomas','Delincuente','Acienda Las Flores','Loco','54872100','DeliThomas.gt');
 call sp_ListarProveedores();
 
 

@@ -14,6 +14,7 @@ import org.harlinpalacios.controller.MenuClientesController;
 import org.harlinpalacios.controller.MenuComprasController;
 import org.harlinpalacios.controller.MenuEmailProveedorController;
 import org.harlinpalacios.controller.MenuEmpleadosController;
+import org.harlinpalacios.controller.MenuFacturasController;
 import org.harlinpalacios.controller.MenuPrincipalController;
 import org.harlinpalacios.controller.MenuProductosController;
 import org.harlinpalacios.controller.MenuProgramador;
@@ -93,7 +94,7 @@ public class Principal extends Application {
     
     public void menuProductosView(){
         try{
-            MenuProductosController menuProductosView =(MenuProductosController) cambiarEscena("MenuProductosView.fxml",856,416);
+            MenuProductosController menuProductosView =(MenuProductosController) cambiarEscena("MenuProductosView.fxml",856,405);
             menuProductosView.setEscenarioPrincipal(this);
         }catch(Exception e){
             e.printStackTrace();
@@ -170,6 +171,13 @@ public class Principal extends Application {
             }
         }
   
-    
+    public void menuFacturasView(){
+            try{
+                MenuFacturasController menuFacturasView = (MenuFacturasController)cambiarEscena("MenuFacturasView.fxml", 684,415);
+                menuFacturasView.setEscenarioPrincipal(this);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
  
 }

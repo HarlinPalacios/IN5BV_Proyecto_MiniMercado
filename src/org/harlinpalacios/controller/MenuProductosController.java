@@ -71,14 +71,14 @@ public class MenuProductosController implements Initializable {
     
     public void cargarDatos(){
         tblProductos.setItems(getProductos());
-        colCodProd.setCellFactory(new PropertyValueFactory<Producto, String>("codigoProductos"));
-        colDescProd.setCellFactory(new PropertyValueFactory<Producto, String>("descripcionProducto"));
-        colPrecioU.setCellFactory(new PropertyValueFactory<Producto, Double>("precioUnitario"));
-        colPrecioD.setCellFactory(new PropertyValueFactory<Producto, Double>("precioDocena"));
-        colPrecioM.setCellFactory(new PropertyValueFactory<Producto, Double>("precioMayor"));
-        colExistencia.setCellFactory(new PropertyValueFactory<Producto, Integer>("existencia"));
-        colCodTipoProd.setCellFactory(new PropertyValueFactory<Producto, Integer>("codigocodigoTipoPro"));
-        colCodProv.setCellFactory(new PropertyValueFactory<Producto, Integer>("codigoProveedores"));
+        colCodProd.setCellValueFactory(new PropertyValueFactory<Producto, String>("codigoProductos"));
+        colDescProd.setCellValueFactory(new PropertyValueFactory<Producto, String>("descripcionProducto"));
+        colPrecioU.setCellValueFactory(new PropertyValueFactory<Producto, Double>("precioUnitario"));
+        colPrecioD.setCellValueFactory(new PropertyValueFactory<Producto, Double>("precioDocena"));
+        colPrecioM.setCellValueFactory(new PropertyValueFactory<Producto, Double>("precioMayor"));
+        colExistencia.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("existencia"));
+        colCodTipoProd.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("codigocodigoTipoPro"));
+        colCodProv.setCellValueFactory(new PropertyValueFactory<Producto, Integer>("codigoProveedores"));
     }
     
     
@@ -90,6 +90,7 @@ public class MenuProductosController implements Initializable {
         txtPrecioM.setText(String.valueOf(((Producto)tblProductos.getSelectionModel().getSelectedItem()).getPrecioMayor()));
         txtExistencia.setText(String.valueOf(((Producto)tblProductos.getSelectionModel().getSelectedItem()).getExistencia()));
         cmbCodigoTipoP.getSelectionModel().select(buscarTipoP(((Producto)tblProductos.getSelectionModel().getSelectedItem()).getCodigoTipoPro()));
+
     }
 
     public TipoProducto buscarTipoP (int codigoTipoP){
@@ -101,13 +102,7 @@ public class MenuProductosController implements Initializable {
             while(registro.next());
                 resultado = new TipoProducto(registro.getInt("CodigoTipoProducto"),
                                             registro.getString("descripcionProducto")
-                                            
-                
-                
                 );
-                
-            
-            
             
         }catch(Exception e){
             e.printStackTrace();
@@ -275,6 +270,7 @@ public class MenuProductosController implements Initializable {
         txtPrecioM.clear();
         txtExistencia.clear();
         cmbCodigoTipoP.getSelectionModel().getSelectedItem();
+        cmbCodProv.getSelectionModel().getSelectedItem();
     }
     
     

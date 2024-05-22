@@ -24,6 +24,8 @@ public class MenuPrincipalController implements Initializable {
     @FXML MenuItem btnMenuProgramador;
     @FXML MenuItem btnMenuTelefono;
     @FXML MenuItem btnMenuEmail;
+    @FXML MenuItem btnMenuFactura;
+
 
     
     @Override
@@ -106,6 +108,13 @@ public class MenuPrincipalController implements Initializable {
     public void clicEmailPro(ActionEvent event){
         if (event.getSource() == btnMenuEmail){
             escenarioPrincipal.menuEmialView();
+        }
+    }
+    
+    @FXML 
+    public void clicFactura(ActionEvent event){
+        if (event.getSource() == btnMenuFactura){
+            escenarioPrincipal.menuFacturasView();
         }
     }
     
