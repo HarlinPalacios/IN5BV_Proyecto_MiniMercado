@@ -32,7 +32,7 @@ import org.harlinpalacios.system.Principal;
  * Seccion: IN5BV
  * Carne: 2020586
  * Fecgha de creacion: 11/4/24
- * Fecha de Modificacion  10/05/24
+ * Fecha de Modificacion  21/05/24
  */
 
 public class MenuClientesController implements Initializable{

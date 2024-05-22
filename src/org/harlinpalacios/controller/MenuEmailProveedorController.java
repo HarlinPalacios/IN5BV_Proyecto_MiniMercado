@@ -18,7 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
-import org.harlinpalacios.bean.Cargos;
+import org.harlinpalacios.bean.Email;
 import org.harlinpalacios.db.Conexion;
 import org.harlinpalacios.system.Principal;
 
@@ -27,22 +27,22 @@ import org.harlinpalacios.system.Principal;
  *
  * @author informatica
  */
-public class MenuCargosController implements Initializable {
+public class MenuEmailProveedorController implements Initializable {
     private Principal escenarioPrincipal;
     private enum operaciones{AGREGAR,ELIMINAR,EDITAR,ACTUALIZAR,CANCELAR,NINGUNO}
     private operaciones tipoDeOperaciones = operaciones.NINGUNO;
-    private ObservableList<Cargos> listarCargos;
+    private ObservableList<Email> listarEmail;
     
     @FXML private Button btnRegresar;
     
-    @FXML private TextField txtCodigoC;
-    @FXML private TextField txtNombreC;
-    @FXML private TextField txtDescripcionC;
+    @FXML private TextField txtCodigoE;
+    @FXML private TextField txtEmailP;
+    @FXML private TextField txtDescripcionP;
     
-    @FXML private TableView tblCargos;
-    @FXML private TableColumn colCodigoC;
-    @FXML private TableColumn colNombreC;
-    @FXML private TableColumn colDescripcionC;
+    @FXML private TableView tblEmail;
+    @FXML private TableColumn colCodigoE;
+    @FXML private TableColumn colEmailP;
+    @FXML private TableColumn colDescripcionP;
     
     @FXML private Button btnAgregar;
     @FXML private Button btnEliminar;
@@ -61,38 +61,38 @@ public class MenuCargosController implements Initializable {
     }    
 
     public void cargarDatos(){
-        tblCargos.setItems(getCargos());
-        colCodigoC.setCellValueFactory(new PropertyValueFactory<Cargos, Integer>("codigoCargoEm"));
-        colNombreC.setCellValueFactory(new PropertyValueFactory<Cargos, Integer>("nombreCargo"));
-        colDescripcionC.setCellValueFactory(new PropertyValueFactory<Cargos, Integer>("descripcionCargo"));
+        tblEmail.setItems(getEmail());
+        colCodigoE.setCellValueFactory(new PropertyValueFactory<Email, Integer>("codigoEmailProveedor"));
+        colEmailP.setCellValueFactory(new PropertyValueFactory<Email, Integer>("emailProveedor"));
+        colDescripcionP.setCellValueFactory(new PropertyValueFactory<Email, Integer>("descripcion"));
     }
     
     public void selecionarElementos(){
-        txtCodigoC.setText(String.valueOf(((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getCodigoCargoEm()));
-        txtNombreC.setText(((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getNombreCargo());
-        txtDescripcionC.setText(((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getDescripcionCargo());
+        txtCodigoE.setText(String.valueOf(((Email)tblEmail.getSelectionModel().getSelectedItem()).getCodigoEmailProveedor()));
+        txtEmailP.setText(((Email)tblEmail.getSelectionModel().getSelectedItem()).getEmailProveedor());
+        txtDescripcionP.setText(((Email)tblEmail.getSelectionModel().getSelectedItem()).getDescripcion());
     }
     
-    public ObservableList<Cargos> getCargos (){
+    public ObservableList<Email> getEmail (){
         // Variable lista                       
-        ArrayList<Cargos> lista = new ArrayList<>();
+        ArrayList<Email> lista = new ArrayList<>();
         // amnejo de excepcion
         // variable que almace la linea de conexion
         try{                             
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarCargo()}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarEmialPro()}");
             ResultSet resultado = procedimiento.executeQuery();
             // Funciona por medio del resultado y que avanze de fila en fila
             // La lista de tipo Arraylist donde recivimos nuestros dato
             while(resultado.next()){
-                lista.add(new Cargos (resultado.getInt("codigoCargoEm"),
-                                        resultado.getString("nombreCargo"),
-                                        resultado.getString("descripcionCargo")
+                lista.add(new Email (resultado.getInt("codigoEmailProveedor"),
+                                        resultado.getString("emailProveedor"),
+                                        resultado.getString("descripcion")
                 ));
             }
         }catch(Exception e){
             e.printStackTrace();
         }
-    return listarCargos = FXCollections.observableArrayList(lista);
+    return listarEmail = FXCollections.observableArrayList(lista);
     }
     
     public void agregar(){
@@ -124,23 +124,22 @@ public class MenuCargosController implements Initializable {
         
     }
     public void guardar(){
-        Cargos registro = new Cargos();
-        registro.setCodigoCargoEm(Integer.parseInt(txtCodigoC.getText()));
-        registro.setNombreCargo(txtNombreC.getText());
-        registro.setDescripcionCargo(txtDescripcionC.getText());
+        Email registro = new Email();
+        registro.setCodigoEmailProveedor(Integer.parseInt(txtCodigoE.getText()));
+        registro.setEmailProveedor(txtEmailP.getText());
+        registro.setDescripcion(txtDescripcionP.getText());
         try{
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarCargo(?, ?, ?)}");
-            procedimiento.setInt(1, registro.getCodigoCargoEm());
-            procedimiento.setString(2, registro.getNombreCargo());
-            procedimiento.setString(3, registro.getDescripcionCargo());
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarEmailPro(?, ?, ?)}");
+            procedimiento.setInt(1, registro.getCodigoEmailProveedor());
+            procedimiento.setString(2, registro.getEmailProveedor());
+            procedimiento.setString(3, registro.getDescripcion());
             procedimiento.execute();
-            listarCargos.add(registro);
+            listarEmail.add(registro);
             
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-    
     
     public void eliminar(){
         switch(tipoDeOperaciones){
@@ -157,15 +156,15 @@ public class MenuCargosController implements Initializable {
                 break;   
                 
             default:
-                if(tblCargos.getSelectionModel().getSelectedItem() !=null){
+                if(tblEmail.getSelectionModel().getSelectedItem() !=null){
                     int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar si elimana el registro", 
-                            "Eliminar Cargos", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            "Eliminar Email", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(respuesta == JOptionPane.YES_NO_OPTION){
                         try{
-                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarCargo(?)}");
-                            procedimiento.setInt(1, ((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getCodigoCargoEm());
+                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarEmailPro(?)}");
+                            procedimiento.setInt(1, ((Email)tblEmail.getSelectionModel().getSelectedItem()).getCodigoEmailProveedor());
                             procedimiento.execute();
-                            listarCargos.remove(tblCargos.getSelectionModel().getSelectedItem());
+                            listarEmail.remove(tblEmail.getSelectionModel().getSelectedItem());
                         }catch(Exception e){
                             e.printStackTrace();
                         }
@@ -181,7 +180,7 @@ public class MenuCargosController implements Initializable {
     public void editar(){
         switch(tipoDeOperaciones){
             case NINGUNO:
-                if(tblCargos.getSelectionModel().getSelectedItem() !=null){
+                if(tblEmail.getSelectionModel().getSelectedItem() !=null){
                     btnEditar.setText("Actualizar");
                     btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
@@ -189,7 +188,7 @@ public class MenuCargosController implements Initializable {
                     imgEditar.setImage(new Image("/org/harlinpalacios/imagenes/Actualizar Clientes.png"));
                     imgReporte.setImage(new Image("/org/harlinpalacios/imagenes/Cancelar.png"));
                     activarControles();
-                    txtCodigoC.setEditable(false);
+                    txtCodigoE.setEditable(false);
                     tipoDeOperaciones = operaciones.ACTUALIZAR;
                     
                 }else 
@@ -213,13 +212,13 @@ public class MenuCargosController implements Initializable {
 
     public void actualizar(){
         try{
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarCargo(?, ?, ?)}");
-            Cargos registro = (Cargos)tblCargos.getSelectionModel().getSelectedItem();
-            registro.setNombreCargo(txtNombreC.getText());
-            registro.setDescripcionCargo(txtDescripcionC.getText());
-            procedimiento.setInt(1, registro.getCodigoCargoEm());
-            procedimiento.setString(2, registro.getNombreCargo());
-            procedimiento.setString(3, registro.getDescripcionCargo());
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarEmailPro(?, ?, ?)}");
+            Email registro = (Email)tblEmail.getSelectionModel().getSelectedItem();
+            registro.setEmailProveedor(txtEmailP.getText());
+            registro.setDescripcion(txtDescripcionP.getText());
+            procedimiento.setInt(1, registro.getCodigoEmailProveedor());
+            procedimiento.setString(2, registro.getEmailProveedor());
+            procedimiento.setString(3, registro.getDescripcion());
             procedimiento.execute();
 
         }catch (Exception e){
@@ -229,23 +228,23 @@ public class MenuCargosController implements Initializable {
     
     
     public void desactivarControles(){
-        txtCodigoC.setEditable(false);
-        txtNombreC.setEditable(false);
-        txtDescripcionC.setEditable(false);
+        txtCodigoE.setEditable(false);
+        txtEmailP.setEditable(false);
+        txtDescripcionP.setEditable(false);
     }
     
     public void activarControles(){
-        txtCodigoC.setEditable(true);
-        txtNombreC.setEditable(true);
-        txtDescripcionC.setEditable(true);
+        txtCodigoE.setEditable(true);
+        txtEmailP.setEditable(true);
+        txtDescripcionP.setEditable(true);
     }
     
     ///////////////////
     // limpiar el texto//
     public void limpiarControles(){
-        txtCodigoC.clear();
-        txtNombreC.clear();
-        txtDescripcionC.clear();
+        txtCodigoE.clear();
+        txtEmailP.clear();
+        txtDescripcionP.clear();
     }
 
 

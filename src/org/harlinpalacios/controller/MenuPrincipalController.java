@@ -22,7 +22,9 @@ public class MenuPrincipalController implements Initializable {
     @FXML MenuItem btnMenuCargos;
     @FXML MenuItem btnMenuTipoProducto;
     @FXML MenuItem btnMenuProgramador;
-    
+    @FXML MenuItem btnMenuTelefono;
+    @FXML MenuItem btnMenuEmail;
+
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,6 +92,20 @@ public class MenuPrincipalController implements Initializable {
     public void clicProgramador(ActionEvent event){
         if (event.getSource() == btnMenuProgramador){
             escenarioPrincipal.menuProgramador();
+        }
+    }
+    
+    @FXML 
+    public void clicTelefonoPro(ActionEvent event){
+        if (event.getSource() == btnMenuTelefono){
+            escenarioPrincipal.menuTelefonoView();
+        }
+    }
+    
+    @FXML 
+    public void clicEmailPro(ActionEvent event){
+        if (event.getSource() == btnMenuEmail){
+            escenarioPrincipal.menuEmialView();
         }
     }
     

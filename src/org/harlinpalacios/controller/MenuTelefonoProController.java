@@ -18,7 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javax.swing.JOptionPane;
-import org.harlinpalacios.bean.Cargos;
+import org.harlinpalacios.bean.TelefonoPro;
 import org.harlinpalacios.db.Conexion;
 import org.harlinpalacios.system.Principal;
 
@@ -27,22 +27,24 @@ import org.harlinpalacios.system.Principal;
  *
  * @author informatica
  */
-public class MenuCargosController implements Initializable {
+public class MenuTelefonoProController implements Initializable {
     private Principal escenarioPrincipal;
     private enum operaciones{AGREGAR,ELIMINAR,EDITAR,ACTUALIZAR,CANCELAR,NINGUNO}
     private operaciones tipoDeOperaciones = operaciones.NINGUNO;
-    private ObservableList<Cargos> listarCargos;
+    private ObservableList<TelefonoPro> listarTelefono;
     
     @FXML private Button btnRegresar;
     
-    @FXML private TextField txtCodigoC;
-    @FXML private TextField txtNombreC;
-    @FXML private TextField txtDescripcionC;
+    @FXML private TextField txtCodigoT;
+    @FXML private TextField txtNumeroP;
+    @FXML private TextField txtNumeroS;
+    @FXML private TextField txtObservacion;
     
-    @FXML private TableView tblCargos;
-    @FXML private TableColumn colCodigoC;
-    @FXML private TableColumn colNombreC;
-    @FXML private TableColumn colDescripcionC;
+    @FXML private TableView tblTelefono;
+    @FXML private TableColumn colCodigoT;
+    @FXML private TableColumn colNumeroP;
+    @FXML private TableColumn colNuumeroS;
+    @FXML private TableColumn colObservacion;
     
     @FXML private Button btnAgregar;
     @FXML private Button btnEliminar;
@@ -61,38 +63,41 @@ public class MenuCargosController implements Initializable {
     }    
 
     public void cargarDatos(){
-        tblCargos.setItems(getCargos());
-        colCodigoC.setCellValueFactory(new PropertyValueFactory<Cargos, Integer>("codigoCargoEm"));
-        colNombreC.setCellValueFactory(new PropertyValueFactory<Cargos, Integer>("nombreCargo"));
-        colDescripcionC.setCellValueFactory(new PropertyValueFactory<Cargos, Integer>("descripcionCargo"));
+        tblTelefono.setItems(getTelefonoPro());
+        colCodigoT.setCellValueFactory(new PropertyValueFactory<TelefonoPro, Integer>("codigoTelefonoProveedor"));
+        colNumeroP.setCellValueFactory(new PropertyValueFactory<TelefonoPro, Integer>("numeroPrincipal"));
+        colNuumeroS.setCellValueFactory(new PropertyValueFactory<TelefonoPro, Integer>("numeroSecundario"));
+        colObservacion.setCellValueFactory(new PropertyValueFactory<TelefonoPro, Integer>("observaciones"));
     }
     
     public void selecionarElementos(){
-        txtCodigoC.setText(String.valueOf(((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getCodigoCargoEm()));
-        txtNombreC.setText(((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getNombreCargo());
-        txtDescripcionC.setText(((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getDescripcionCargo());
+        txtCodigoT.setText(String.valueOf(((TelefonoPro)tblTelefono.getSelectionModel().getSelectedItem()).getCodigoTelefonoProveedor()));
+        txtNumeroP.setText(((TelefonoPro)tblTelefono.getSelectionModel().getSelectedItem()).getNumeroPrincipal());
+        txtNumeroS.setText(((TelefonoPro)tblTelefono.getSelectionModel().getSelectedItem()).getNumeroSecundario());
+        txtObservacion.setText(((TelefonoPro)tblTelefono.getSelectionModel().getSelectedItem()).getObservaciones());
     }
     
-    public ObservableList<Cargos> getCargos (){
+    public ObservableList<TelefonoPro> getTelefonoPro (){
         // Variable lista                       
-        ArrayList<Cargos> lista = new ArrayList<>();
+        ArrayList<TelefonoPro> lista = new ArrayList<>();
         // amnejo de excepcion
         // variable que almace la linea de conexion
         try{                             
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarCargo()}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarTelefonoPro()}");
             ResultSet resultado = procedimiento.executeQuery();
             // Funciona por medio del resultado y que avanze de fila en fila
             // La lista de tipo Arraylist donde recivimos nuestros dato
             while(resultado.next()){
-                lista.add(new Cargos (resultado.getInt("codigoCargoEm"),
-                                        resultado.getString("nombreCargo"),
-                                        resultado.getString("descripcionCargo")
+                lista.add(new TelefonoPro (resultado.getInt("codigoTelefonoProveedor"),
+                                        resultado.getString("numeroPrincipal"),
+                                        resultado.getString("numeroSecundario"),
+                                        resultado.getString("observaciones")
                 ));
             }
         }catch(Exception e){
             e.printStackTrace();
         }
-    return listarCargos = FXCollections.observableArrayList(lista);
+    return listarTelefono = FXCollections.observableArrayList(lista);
     }
     
     public void agregar(){
@@ -124,17 +129,19 @@ public class MenuCargosController implements Initializable {
         
     }
     public void guardar(){
-        Cargos registro = new Cargos();
-        registro.setCodigoCargoEm(Integer.parseInt(txtCodigoC.getText()));
-        registro.setNombreCargo(txtNombreC.getText());
-        registro.setDescripcionCargo(txtDescripcionC.getText());
+        TelefonoPro registro = new TelefonoPro();
+        registro.setCodigoTelefonoProveedor(Integer.parseInt(txtCodigoT.getText()));
+        registro.setNumeroPrincipal(txtNumeroP.getText());
+        registro.setNumeroSecundario(txtNumeroS.getText());
+        registro.setObservaciones(txtObservacion.getText());
         try{
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarCargo(?, ?, ?)}");
-            procedimiento.setInt(1, registro.getCodigoCargoEm());
-            procedimiento.setString(2, registro.getNombreCargo());
-            procedimiento.setString(3, registro.getDescripcionCargo());
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarTelefonoPro(?, ?, ?, ?)}");
+            procedimiento.setInt(1, registro.getCodigoTelefonoProveedor());
+            procedimiento.setString(2, registro.getNumeroPrincipal());
+            procedimiento.setString(3, registro.getNumeroSecundario());
+            procedimiento.setString(4, registro.getObservaciones());
             procedimiento.execute();
-            listarCargos.add(registro);
+            listarTelefono.add(registro);
             
         }catch (Exception e){
             e.printStackTrace();
@@ -157,15 +164,15 @@ public class MenuCargosController implements Initializable {
                 break;   
                 
             default:
-                if(tblCargos.getSelectionModel().getSelectedItem() !=null){
+                if(tblTelefono.getSelectionModel().getSelectedItem() !=null){
                     int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar si elimana el registro", 
                             "Eliminar Cargos", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if(respuesta == JOptionPane.YES_NO_OPTION){
                         try{
-                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarCargo(?)}");
-                            procedimiento.setInt(1, ((Cargos)tblCargos.getSelectionModel().getSelectedItem()).getCodigoCargoEm());
+                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EliminarTelefonoPro(?)}");
+                            procedimiento.setInt(1, ((TelefonoPro)tblTelefono.getSelectionModel().getSelectedItem()).getCodigoTelefonoProveedor());
                             procedimiento.execute();
-                            listarCargos.remove(tblCargos.getSelectionModel().getSelectedItem());
+                            listarTelefono.remove(tblTelefono.getSelectionModel().getSelectedItem());
                         }catch(Exception e){
                             e.printStackTrace();
                         }
@@ -181,7 +188,7 @@ public class MenuCargosController implements Initializable {
     public void editar(){
         switch(tipoDeOperaciones){
             case NINGUNO:
-                if(tblCargos.getSelectionModel().getSelectedItem() !=null){
+                if(tblTelefono.getSelectionModel().getSelectedItem() !=null){
                     btnEditar.setText("Actualizar");
                     btnReporte.setText("Cancelar");
                     btnAgregar.setDisable(true);
@@ -189,7 +196,7 @@ public class MenuCargosController implements Initializable {
                     imgEditar.setImage(new Image("/org/harlinpalacios/imagenes/Actualizar Clientes.png"));
                     imgReporte.setImage(new Image("/org/harlinpalacios/imagenes/Cancelar.png"));
                     activarControles();
-                    txtCodigoC.setEditable(false);
+                    txtCodigoT.setEditable(false);
                     tipoDeOperaciones = operaciones.ACTUALIZAR;
                     
                 }else 
@@ -213,13 +220,15 @@ public class MenuCargosController implements Initializable {
 
     public void actualizar(){
         try{
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarCargo(?, ?, ?)}");
-            Cargos registro = (Cargos)tblCargos.getSelectionModel().getSelectedItem();
-            registro.setNombreCargo(txtNombreC.getText());
-            registro.setDescripcionCargo(txtDescripcionC.getText());
-            procedimiento.setInt(1, registro.getCodigoCargoEm());
-            procedimiento.setString(2, registro.getNombreCargo());
-            procedimiento.setString(3, registro.getDescripcionCargo());
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_EditarTelefonoPro(?, ?, ?, ?)}");
+            TelefonoPro registro = (TelefonoPro)tblTelefono.getSelectionModel().getSelectedItem();
+            registro.setNumeroPrincipal(txtNumeroP.getText());
+            registro.setNumeroSecundario(txtNumeroS.getText());
+            registro.setObservaciones(txtObservacion.getText());
+            procedimiento.setInt(1, registro.getCodigoTelefonoProveedor());
+            procedimiento.setString(2, registro.getNumeroPrincipal());
+            procedimiento.setString(3, registro.getNumeroSecundario());
+            procedimiento.setString(4, registro.getObservaciones());
             procedimiento.execute();
 
         }catch (Exception e){
@@ -229,23 +238,26 @@ public class MenuCargosController implements Initializable {
     
     
     public void desactivarControles(){
-        txtCodigoC.setEditable(false);
-        txtNombreC.setEditable(false);
-        txtDescripcionC.setEditable(false);
+        txtCodigoT.setEditable(false);
+        txtNumeroP.setEditable(false);
+        txtNumeroS.setEditable(false);
+        txtObservacion.setEditable(false);
     }
     
     public void activarControles(){
-        txtCodigoC.setEditable(true);
-        txtNombreC.setEditable(true);
-        txtDescripcionC.setEditable(true);
+        txtCodigoT.setEditable(true);
+        txtNumeroP.setEditable(true);
+        txtNumeroS.setEditable(true);
+        txtObservacion.setEditable(true);
     }
     
     ///////////////////
     // limpiar el texto//
     public void limpiarControles(){
-        txtCodigoC.clear();
-        txtNombreC.clear();
-        txtDescripcionC.clear();
+        txtCodigoT.clear();
+        txtNumeroP.clear();
+        txtNumeroS.clear();
+        txtObservacion.clear();
     }
 
 
