@@ -12,11 +12,13 @@ import javafx.stage.Stage;
 import org.harlinpalacios.controller.MenuCargosController;
 import org.harlinpalacios.controller.MenuClientesController;
 import org.harlinpalacios.controller.MenuComprasController;
+import org.harlinpalacios.controller.MenuEmailProveedorController;
 import org.harlinpalacios.controller.MenuEmpleadosController;
 import org.harlinpalacios.controller.MenuPrincipalController;
 import org.harlinpalacios.controller.MenuProductosController;
 import org.harlinpalacios.controller.MenuProgramador;
 import org.harlinpalacios.controller.MenuProveedoresController;
+import org.harlinpalacios.controller.MenuTelefonoProController;
 import org.harlinpalacios.controller.MenuTipoProductoContoller;
  
 /**
@@ -149,10 +151,24 @@ public class Principal extends Application {
    
     }
            
-    public static void main(String[] args) {
-        launch(args);  
+    
+    public void menuTelefonoView(){
+        try{
+            MenuTelefonoProController menuTelefonoView = (MenuTelefonoProController)cambiarEscena("MenuTelefonoView.fxml", 710,357);
+            menuTelefonoView.setEscenarioPrincipal(this);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
-
+    
+    public void menuEmialView(){
+            try{
+                MenuEmailProveedorController menuEmailProView = (MenuEmailProveedorController)cambiarEscena("MenuEmailProView.fxml", 607,334);
+                menuEmailProView.setEscenarioPrincipal(this);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
   
     
  
