@@ -38,21 +38,6 @@ create table CargoEmpleado(
     primary key PK_codigoCargoEm(codigoCargoEm)
 );
 
-create table TelefonoProveedores(
-	codigoTelefonoProveedor int not null,
-	numeroPrincipal varchar(8) not null,
-	numeroSecundario varchar(8) not null,
-	observaciones varchar(45) not null,
-	primary key PK_codigoTelefonoProve(codigoTelefonoProveedor)
-);
-
-create table EmailProveedores(
-	codigoEmailProveedor int not null,
-    emailProveedor varchar(50) not null,
-    descripcion varchar(100) not null,
-	primary key PK_codigoEmailProveedor(codigoEmailProveedor)
-);
-
 create table Proveedores(
 	codigoProveedores int not null,
 	NITProveedor varchar(10) not null,
@@ -63,6 +48,25 @@ create table Proveedores(
 	contactoPrincipal varchar(100), 
 	paginaWeb varchar(50),
 	primary key PK_codigoProveedores(codigoProveedores)
+);
+
+create table TelefonoProveedores(
+	codigoTelefonoProveedor int not null,
+	numeroPrincipal varchar(8) not null,
+	numeroSecundario varchar(8) not null,
+	observaciones varchar(45) not null,
+	primary key PK_codigoTelefonoProve(codigoTelefonoProveedor),
+    constraint FK_Proveedores_TelefonoProveedor foreign key (codigoProveedor)
+	references Proveedores (codigoProveedor)
+);
+
+create table EmailProveedores(
+	codigoEmailProveedor int not null,
+    emailProveedor varchar(50) not null,
+    descripcion varchar(100) not null,
+	primary key PK_codigoEmailProveedor(codigoEmailProveedor),
+    constraint FK_Proveedores_TelefonoProveedor foreign key (codigoProveedor)
+	references Proveedores (codigoProveedor)
 );
 
 create table Empleados(
@@ -298,6 +302,76 @@ Delimiter ;
 
 call sp_EditarCompra(2,'2022-10-6', 'hsfatjaEghwkyjzeerha', 500.50);
 call sp_ListarCompras();
+
+
+-- ///////////////////////////////////////////////////////Procedimeinto Almacenado/////////////////////////////////////////////////
+-- *********************************************************Agregar TipoProducto***************************************************
+Delimiter $$
+	create procedure sp_AgregarTipoProducto(in codigoTipoPro int, in descripcion varchar(100))
+	Begin
+		insert into TipoProducto (codigoTipoPro, descripcion)
+		values (codigoTipoPro, descripcion);
+	End $$ 
+Delimiter ;
+
+call sp_AgregarTipoProducto(1, 'w5h24bejkujyngsnrmry');
+call sp_AgregarTipoProducto(2, 'strhetwtrnwsnrsethwh');
+
+-- *********************************************************Listar TipoProducto***************************************************
+Delimiter $$
+	create procedure sp_ListarTipoProducto()
+	Begin
+		select
+        F.codigoTipoPro,
+        F.descripcion
+        from TipoProducto F;
+	End $$
+Delimiter ;
+
+call sp_ListarTipoProducto();
+
+-- *********************************************************Buscar TipoProducto***************************************************
+Delimiter $$
+	create procedure sp_BuscarTipoProducto(in TiProID int)
+    Begin 
+		select
+        F.codigoTipoPro,
+        F.descripcion
+        from TipoProducto F
+        where codigoTipoPro = TiProID;
+	End $$
+Delimiter ;
+
+call sp_BuscarTipoProducto(1);
+
+-- *********************************************************Eliminar TipoProducto***************************************************
+Delimiter $$
+create procedure sp_EliminarTipoProducto(in TiProID int)
+    Begin 
+		delete from TipoProducto
+			where codigoTipoPro = TiProID;
+		End $$
+Delimiter ;
+
+call sp_EliminarTipoProducto(1);
+call sp_ListarTipoProducto();
+-- *********************************************************Editar TipoProducto*****************************************************
+Delimiter $$
+	create procedure sp_EditarTipoProducto(in codiTiPro int, in descrip varchar(100))
+		Begin 
+			update TipoProducto F
+				set
+			F.codigoTipoPro= codiTiPro,
+			F.descripcion = descrip
+            where codigoTipoPro = codiTiPro;
+		End $$
+Delimiter ;
+
+call sp_EditarTipoProducto(2,'Vino');
+call sp_ListarTipoProducto();
+
+
+
 
 
 -- //////////////////////////////////////////////////////////Procedimiento Almacenado////////////////////////////////////////////////////
@@ -612,75 +686,6 @@ call sp_ListarProveedores();
 
 
 
-
--- ///////////////////////////////////////////////////////Procedimeinto Almacenado/////////////////////////////////////////////////
--- *********************************************************Agregar TipoProducto***************************************************
-Delimiter $$
-	create procedure sp_AgregarTipoProducto(in codigoTipoPro int, in descripcion varchar(100))
-	Begin
-		insert into TipoProducto (codigoTipoPro, descripcion)
-		values (codigoTipoPro, descripcion);
-	End $$ 
-Delimiter ;
-
-call sp_AgregarTipoProducto(1, 'w5h24bejkujyngsnrmry');
-call sp_AgregarTipoProducto(2, 'strhetwtrnwsnrsethwh');
-
--- *********************************************************Listar TipoProducto***************************************************
-Delimiter $$
-	create procedure sp_ListarTipoProducto()
-	Begin
-		select
-        F.codigoTipoPro,
-        F.descripcion
-        from TipoProducto F;
-	End $$
-Delimiter ;
-
-call sp_ListarTipoProducto();
-
--- *********************************************************Buscar TipoProducto***************************************************
-Delimiter $$
-	create procedure sp_BuscarTipoProducto(in TiProID int)
-    Begin 
-		select
-        F.codigoTipoPro,
-        F.descripcion
-        from TipoProducto F
-        where codigoTipoPro = TiProID;
-	End $$
-Delimiter ;
-
-call sp_BuscarTipoProducto(1);
-
--- *********************************************************Eliminar TipoProducto***************************************************
-Delimiter $$
-create procedure sp_EliminarTipoProducto(in TiProID int)
-    Begin 
-		delete from TipoProducto
-			where codigoTipoPro = TiProID;
-		End $$
-Delimiter ;
-
-call sp_EliminarTipoProducto(1);
-call sp_ListarTipoProducto();
--- *********************************************************Editar TipoProducto*****************************************************
-Delimiter $$
-	create procedure sp_EditarTipoProducto(in codiTiPro int, in descrip varchar(100))
-		Begin 
-			update TipoProducto F
-				set
-			F.codigoTipoPro= codiTiPro,
-			F.descripcion = descrip
-            where codigoTipoPro = codiTiPro;
-		End $$
-Delimiter ;
-
-call sp_EditarTipoProducto(2,'Vino');
-call sp_ListarTipoProducto();
-
-
-
 -- ////////////////////////////////////////////////////////Procedimiento Almacenado//////////////////////////////////////////////////
 -- ***********************************************************Agregar Empleados******************************************************
 Delimiter $$
@@ -932,3 +937,156 @@ Delimiter ;
 
 call sp_EditarProducto(1,'Fritos',20.00,300.00,5000.00,'drtsfjyj',1,2,3);
 call sp_ListarProductos();
+
+
+-- ////////////////////////////////////////////////////////Procedimiento Almacenado De Detalles Compras//////////////////////////////////////////////////
+-- ***********************************************************Agregar Detalles Compras******************************************************
+Delimiter $$
+		create procedure sp_AgregarDetallesCompras(in codigoDetalles int, in costoUnitario decimal(10,2), in cantidad int, in codigoProductos int, in numeroDocumento int)
+	Begin
+		insert into DetallesCompra (codigoDetalles, costoUnitario, cantidad,codigoProductos,numeroDocumento)
+		values (codigoDetalles, costoUnitario, cantidad,codigoProductos,numeroDocumento);
+	End $$ 
+Delimiter ;
+
+call sp_AgregarDetallesCompras(1,10.00,5,1,3);
+call sp_AgregarDetallesCompras(2,20.00,3,1,2);
+call sp_AgregarDetallesCompras(3,150.00,9,3,3);
+
+-- ***********************************************************Listar Detalles Compras*******************************************************
+Delimiter $$
+	create procedure sp_ListarDetallesCompra()
+	Begin
+		select
+        O.codigoDetalles,
+        O.costoUnitario,
+        O.cantidad,
+        O.codigoProductos,
+        O.numeroDocumento
+        from DetallesCompra O;
+	End $$
+Delimiter ;
+
+call sp_ListarDetallesCompra();
+
+-- ***********************************************************Buscar Detalles Compras********************************************************
+Delimiter $$
+	create procedure sp_BuscarDetallesCompra(in detaComID int)
+    Begin 
+		select
+        O.codigoDetalles,
+        O.costoUnitario,
+        O.cantidad,
+        O.codigoProductos,
+        O.numeroDocumento
+        from DetallesCompra O
+        where codigoDetalles = detaComID;
+	End $$
+Delimiter ;
+
+call sp_BuscarDetallesCompra(1);
+
+-- ***********************************************************Eliminar Detalles Compras******************************************************
+Delimiter $$
+create procedure sp_EliminarDetallesCompra(in detaComID int)
+    Begin 
+		delete from DetallesCompra
+			where codigoDetalles = detaComID;
+		End $$
+Delimiter ;
+
+call sp_EliminarDetallesCompra(2);
+call sp_ListarDetallesCompra();
+-- ***********************************************************Editar Detalles Compras********************************************************
+Delimiter $$
+	create procedure sp_EditarDetallesCompra(in codigoDeta int, in costoUni decimal(10,2), in cantid int, in codigoProduc int, in numeroDocu int)
+		Begin 
+			update DetallesCompra O
+				set
+			O.codigoDetalles = codigoDeta,
+			O.costoUnitario = costoUni,
+			O.cantidad = cantid,
+			O.codigoProductos = codigoProduc,
+			O.numeroDocumento = numeroDocu
+            where codigoDetalles  = codigoDeta;
+		End $$
+Delimiter ;
+
+call sp_EditarDetallesCompra(1,35.00,20,3,3);
+call sp_ListarDetallesCompra();
+
+
+
+
+-- ////////////////////////////////////////////////////////Procedimiento Almacenado De Detalles Facturas//////////////////////////////////////////////////
+-- ***********************************************************Agregar Detalles Facturas******************************************************
+Delimiter $$
+		create procedure sp_AgregarDetallesFacturas(in codigoDetalleFac int, in precioUnitario decimal(10,2), in cantidad int, in codigoFactura int)
+	Begin
+		insert into DetalleFactura (codigoDetalleFac, precioUnitario, cantidad,codigoFactura)
+		values (codigoDetalleFac, precioUnitario, cantidad,codigoFactura);
+	End $$ 
+Delimiter ;
+
+call sp_AgregarDetallesFacturas(1,10.00,5,1);
+call sp_AgregarDetallesFacturas(2,20.00,3,1);
+call sp_AgregarDetallesFacturas(3,150.00,9,3);
+
+-- ***********************************************************Listar Detalles Facturas*******************************************************
+Delimiter $$
+	create procedure sp_ListarDetallesFacturas()
+	Begin
+		select
+        L.codigoDetalleFac,
+        L.precioUnitario,
+        L.cantidad,
+        L.codigoFactura
+        from DetalleFactura L;
+	End $$
+Delimiter ;
+
+call sp_ListarDetallesFacturas();
+
+-- ***********************************************************Buscar Detalles Facturas********************************************************
+Delimiter $$
+	create procedure sp_BuscarDetallesFacturas(in detaFacID int)
+    Begin 
+		select
+        L.codigoDetalleFac,
+        L.precioUnitario,
+        L.cantidad,
+        L.codigoFactura
+        from DetalleFactura L
+        where codigoDetalleFac = detaFacID;
+	End $$
+Delimiter ;
+
+call sp_BuscarDetallesFacturas(1);
+
+-- ***********************************************************Eliminar Detalles Facturas******************************************************
+Delimiter $$
+create procedure sp_EliminarDetallesFacturas(in detaFacID int)
+    Begin 
+		delete from DetalleFactura
+			where codigoDetalleFac = detaFacID;
+		End $$
+Delimiter ;
+
+call sp_EliminarDetallesFacturas(2);
+call sp_ListarDetallesFacturas();
+-- ***********************************************************Editar Detalles Facturas********************************************************
+Delimiter $$
+	create procedure sp_EditarDetallesFacturas(in codigoDetaFac int, in precioUni decimal(10,2), in canti int, in codigoFac int)
+		Begin 
+			update DetalleFactura L
+				set
+			L.codigoDetalleFac = codigoDetaFac,
+			L.precioUnitario = precioUni,
+			L.cantidad = canti,
+			L.codigoFactura = codigoFac
+            where codigoDetalleFac  = codigoDetaFac;
+		End $$
+Delimiter ;
+
+call sp_EditarDetallesFacturas(1,36.00,25,3);
+call sp_ListarDetallesFacturas();
