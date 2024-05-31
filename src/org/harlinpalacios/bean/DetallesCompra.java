@@ -1,8 +1,8 @@
 package org.harlinpalacios.bean;
 
 public class DetallesCompra {
-    private int codigoDetalleFac;
-    private double costoUnitario;
+    private int codigoDetalleCom;
+    private Double costoUnitario;
     private int cantidad;
     private int codigoProductos;
     private int numeroDocumento;
@@ -12,27 +12,26 @@ public class DetallesCompra {
         
     }
 
-    public DetallesCompra(int codigoDetalleFac, double costoUnitario, int cantidad, int codigoProductos, int numeroDocumento) {
-        this.codigoDetalleFac = codigoDetalleFac;
+    public DetallesCompra(int codigoDetalleCom, Double costoUnitario, int cantidad, int numeroDocumento) {
+        this.codigoDetalleCom = codigoDetalleCom;
         this.costoUnitario = costoUnitario;
         this.cantidad = cantidad;
-        this.codigoProductos = codigoProductos;
         this.numeroDocumento = numeroDocumento;
     }
 
-    public int getCodigoDetalleFac() {
-        return codigoDetalleFac;
+    public int getCodigoDetalleCom() {
+        return codigoDetalleCom;
     }
 
-    public void setCodigoDetalleFac(int codigoDetalleFac) {
-        this.codigoDetalleFac = codigoDetalleFac;
+    public void setCodigoDetalleCom(int codigoDetalleCom) {
+        this.codigoDetalleCom = codigoDetalleCom;
     }
 
     public double getCostoUnitario() {
         return costoUnitario;
     }
 
-    public void setCostoUnitario(double costoUnitario) {
+    public void setCostoUnitario(Double costoUnitario) {
         this.costoUnitario = costoUnitario;
     }
 
@@ -59,6 +58,8 @@ public class DetallesCompra {
     public void setNumeroDocumento(int numeroDocumento) {
         this.numeroDocumento = numeroDocumento;
     }
+
+    
 
     
     
