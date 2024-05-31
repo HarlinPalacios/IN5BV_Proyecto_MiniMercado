@@ -28,19 +28,20 @@ public class MenuDetallesComprasController implements Initializable {
     private Principal escenarioPrincipal;
     private enum operaciones {AGREGAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NINGUNO}
     private operaciones tipoDeOperaciones = operaciones.NINGUNO;
-    private ObservableList<DetallesCompra> listarCompras;
     private ObservableList<Producto> listarProductos;
+    private ObservableList<DetallesCompra> listarDetallesCompra;
+    private ObservableList<Compras> listarCompras;
     
     //Setiar los Objetos
     //Iniciales de ComboBox cmb"Funcion"
     
-    @FXML private TextField txtCodigoDF;
+    @FXML private TextField txtCodigoDC;
     @FXML private TextField txtCostoU;
-    @FXML private TextField txtCantidadDF;
+    @FXML private TextField txtCantidadDC;
     @FXML private ComboBox cmbCodigoP;
     @FXML private ComboBox cmbNumeroDocu;
     
-    @FXML private TableView tblDetallesFac;
+    @FXML private TableView tblDetallesCom;
     @FXML private TableColumn colCodigoDF;
     @FXML private TableColumn colCostoU;
     @FXML private TableColumn colCantidadDF;
@@ -56,13 +57,13 @@ public class MenuDetallesComprasController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cargarDatos();
-        cmbCodigoP.setItems(getCompras());
-        
+        cmbCodigoP.setItems(getProductos());
+        cmbNumeroDocu.setItems(getCompras());
     }
     
     
     public void cargarDatos(){
-        tblDetallesFac.setItems(getCompras());
+        tblDetallesCom.setItems(getCompras());
         colCodigoDF.setCellValueFactory(new PropertyValueFactory<DetallesCompra, Integer>("codigoDetalles"));
         colCostoU.setCellValueFactory(new PropertyValueFactory<DetallesCompra, Double>("costoUnitario"));
         colCantidadDF.setCellValueFactory(new PropertyValueFactory<DetallesCompra, Integer>("cantidad"));
@@ -73,11 +74,11 @@ public class MenuDetallesComprasController implements Initializable {
     
     
     public void seleccionarElementos(){
-       txtCodigoDF.setText(String.valueOf(((DetallesCompra)tblDetallesFac.getSelectionModel().getSelectedItem()).getCodigoDetalleFac()));
-        txtCostoU.setText(String.valueOf(((DetallesCompra)tblDetallesFac.getSelectionModel().getSelectedItem()).getCostoUnitario()));
-        txtCantidadDF.setText(String.valueOf(((DetallesCompra)tblDetallesFac.getSelectionModel().getSelectedItem()).getCantidad()));
-        cmbCodigoP.getSelectionModel().select(buscarProducto(((DetallesCompra)tblDetallesFac.getSelectionModel().getSelectedItem()).getCodigoProductos()));
-        cmbNumeroDocu.getSelectionModel().select(buscarCompras(((DetallesCompra)tblDetallesFac.getSelectionModel().getSelectedItem()).getNumeroDocumento()));
+       txtCodigoDC.setText(String.valueOf(((DetallesCompra)tblDetallesCom.getSelectionModel().getSelectedItem()).getCodigoDetalleCom()));
+        txtCostoU.setText(String.valueOf(((DetallesCompra)tblDetallesCom.getSelectionModel().getSelectedItem()).getCostoUnitario()));
+        txtCantidadDC.setText(String.valueOf(((DetallesCompra)tblDetallesCom.getSelectionModel().getSelectedItem()).getCantidad()));
+        cmbCodigoP.getSelectionModel().select(buscarProducto(((DetallesCompra)tblDetallesCom.getSelectionModel().getSelectedItem()).getCodigoProductos()));
+        cmbNumeroDocu.getSelectionModel().select(buscarCompras(((DetallesCompra)tblDetallesCom.getSelectionModel().getSelectedItem()).getNumeroDocumento()));
     }
 
     public Producto buscarProducto (int codigoProductos){
@@ -113,17 +114,14 @@ public class MenuDetallesComprasController implements Initializable {
     public Compras buscarCompras (int codigoCompras){
         Compras resultado = null;
         try{
-            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarEmpleados(?)}");
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarCompra(?)}");
             procedimiento.setInt(1, codigoCompras);
             ResultSet registro = procedimiento.executeQuery();
             while(registro.next());
-                resultado = new Compras(registro.getInt("codigoEmpleados"),
-                                            registro.getString("nombreEmpleado"),
-                                            registro.getString("apellidoEmpleado"),
-                                            registro.getDouble("sueldo"),
-                                            registro.getString("direccion"),
-                                            registro.getString("turno"),
-                                            registro.getInt("codigoCargoEm")
+                resultado = new Compras(registro.getInt("numeroDocumento"),
+                                            registro.get("fechaDocumento"),
+                                            registro.getString("descripcion"),
+                                            registro.getDouble("totalDocumento")
                             
                 );
                 
@@ -188,26 +186,30 @@ public class MenuDetallesComprasController implements Initializable {
     }
     
     
-    public ObservableList<DetallesCompras> getCompras (){
-        ArrayList<DetallesCompras> Lista = new ArrayList<>();
-        try{
-           PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("call sp_ListarFacturas()");
-           ResultSet resultado = procedimiento.executeQuery();
-           while (resultado.next()){
-               Lista.add(new DetallesCompras (resultado.getInt("codigoDetalleFac"),
-                                       resultado.getString("precioUnitario"),
-                                       resultado.getString("cantidad"),
-                                       resultado.getDouble("sueldo"),
-                                       resultado.getString("direccion"),
-                                       resultado.getString("turno"),
-                                       resultado.getInt("codigoCargoEm") 
-               ));
-           }
+   public ObservableList<DetallesCompra> geDetallesCompra (){
+        // Variable lista                       
+        ArrayList<DetallesCompra> lista = new ArrayList<>();
+        // amnejo de excepcion
+        // variable que almace la linea de conexion
+        try{                             
+            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_ListarProveedores()}");
+            ResultSet resultado = procedimiento.executeQuery();
+            // funciona por medio del resultado y que avanze de fila en fila
+            // la lista de tipo Arraylist donde recivimos nuestros dato
+            while(resultado.next()){
+                lista.add(new DetallesCompra (resultado.getInt("codigoDetalles"),
+                                        resultado.getString("costoUnitario"),
+                                        resultado.getInt("cantidad"),
+                                        resultado.getInt("codigoProductos"),
+                                        resultado.getInt("numeroDocumento")
+                ));
+            }
         }catch(Exception e){
             e.printStackTrace();
         }
-        return listarCompras = FXCollections.observableArrayList(Lista);
-    } 
+    return listarDetallesCompra = FXCollections.observableArrayList(lista);
+    }
+    
     
     
     public void agregar(){
@@ -237,20 +239,20 @@ public class MenuDetallesComprasController implements Initializable {
     
     public void guardar(){
         DetallesCompra registro = new DetallesCompra();
-        registro.setCodigoFactura(Integer.parseInt(txtCodigoF.getText()));
-        registro.setCodigoCliente(((Clientes)cmbCodigoCliente.getSelectionModel().getSelectedItem()).getCodigoCliente());
-        registro.setCodigoEmpleados(((Empleados)cmbCodigoCliente.getSelectionModel().getSelectedItem()).getCodigoEmpleados());
-        registro.setEstado(txtEstado.getText());
-        registro.setTotalFactura(Double.parseDouble(txtTotalFac.getText()));
+        registro.setCodigoDetalleCom(Integer.parseInt(txtCodigoDC.getText()));
+        registro.setCodigoProductos(((Producto)cmbCodigoP.getSelectionModel().getSelectedItem()).getCodigoProductos());
+        registro.setNumeroDocumento(((Compras)cmbNumeroDocu.getSelectionModel().getSelectedItem()).getNumeroDocumento());
+        registro.setCostoUnitario(Double.parseDouble(txtCostoU.getText()));
+        registro.setCodigoDetalleCom(Integer.parseInt(txtCantidadDC.getText()));
             try{
-                PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarFacturas(?, ?, ?, ?, ?)}");
-                procedimiento.setInt(1, registro.getCodigoFactura());
-                procedimiento.setString(2, registro.getEstado());
-                procedimiento.setDouble(3, registro.getTotalFactura());
-                procedimiento.setInt(4, registro.getCodigoCliente());
-                procedimiento.setInt(5, registro.getCodigoEmpleados());
+                PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_AgregarDetallesCompras(?, ?, ?, ?, ?)}");
+                procedimiento.setInt(1, registro.getCodigoDetalleCom());
+                procedimiento.setDouble(2, registro.getCostoUnitario());
+                procedimiento.setInt(3, registro.getCantidad());
+                procedimiento.setInt(4, registro.getCodigoProductos());
+                procedimiento.setInt(5, registro.getNumeroDocumento());
                 
-                listarCompras.add(registro);
+                listarDetallesCompra.add(registro);
             
         }catch(Exception e){
             e.printStackTrace();
@@ -258,27 +260,27 @@ public class MenuDetallesComprasController implements Initializable {
     }
     
     public void desactivarControles(){
-        txtCodigoDF.setEditable(false);
+        txtCodigoDC.setEditable(false);
         txtCostoU.setEditable(false);
-        txtCantidadDF.setEditable(false);
-        cmbCodigoDF.setEditable(false);
+        txtCantidadDC.setEditable(false);
+        cmbCodigoP.setEditable(false);
         cmbNumeroDocu.setEditable(false);
         
     }
     public void activarControles(){
-        txtCodigoDF.setEditable(true);
+        txtCodigoDC.setEditable(true);
         txtCostoU.setEditable(true);
-        txtCantidadDF.setEditable(true);
-        cmbCodigoDF.setEditable(true);
+        txtCantidadDC.setEditable(true);
+        cmbCodigoP.setEditable(true);
         cmbNumeroDocu.setEditable(true);
         
     }
    
     public void limpiarControles(){
-        txtCodigoDF.clear();
+        txtCodigoDC.clear();
         txtCostoU.clear();
-        txtCantidadDF.clear();
-        cmbCodigoDF.getSelectionModel().getSelectedItem();
+        txtCantidadDC.clear();
+        cmbCodigoP.getSelectionModel().getSelectedItem();
         cmbNumeroDocu.getSelectionModel().getSelectedItem();
     }
     
