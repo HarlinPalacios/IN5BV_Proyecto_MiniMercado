@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.harlinpalacios.controller.MenuCargosController;
 import org.harlinpalacios.controller.MenuClientesController;
 import org.harlinpalacios.controller.MenuComprasController;
+import org.harlinpalacios.controller.MenuDetallesFacturasController;
 import org.harlinpalacios.controller.MenuEmailProveedorController;
 import org.harlinpalacios.controller.MenuEmpleadosController;
 import org.harlinpalacios.controller.MenuFacturasController;
@@ -179,5 +180,14 @@ public class Principal extends Application {
                 e.printStackTrace();
             }
         }
+
+    public void menuDetallesFacturaView() {
+        try{
+            MenuDetallesFacturasController menuDetallesFacturaView = (MenuDetallesFacturasController) cambiarEscena("MenuDetallesFacturaView", 612, 427);
+            menuDetallesFacturaView.setEscenarioPrincipal(this);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
  
 }
