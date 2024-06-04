@@ -25,6 +25,7 @@ public class MenuPrincipalController implements Initializable {
     @FXML MenuItem btnMenuTelefono;
     @FXML MenuItem btnMenuEmail;
     @FXML MenuItem btnMenuFactura;
+    @FXML MenuItem btnMenuDetallesFactu;
 
 
     
@@ -118,4 +119,10 @@ public class MenuPrincipalController implements Initializable {
         }
     }
     
+    @FXML
+    public void clicDetallesFactu(ActionEvent event){
+        if (event.getSource() == btnMenuDetallesFactu){
+            escenarioPrincipal.menuDetallesFacturaView();
+        }
+    }
 }

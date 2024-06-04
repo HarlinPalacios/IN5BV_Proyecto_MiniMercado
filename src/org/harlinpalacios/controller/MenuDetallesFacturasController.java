@@ -1,4 +1,3 @@
-
 package org.harlinpalacios.controller;
 
 import java.net.URL;
@@ -8,6 +7,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -48,7 +48,7 @@ public class MenuDetallesFacturasController {
     @FXML private Button btnActualizar;
     @FXML private Button btnReporte;
     
-    @Override
+    
     public void initialize(URL location, ResourceBundle resources){
         cargarDatos();
         cmbcodigoFactura.setItems(getFacturas());
@@ -56,7 +56,7 @@ public class MenuDetallesFacturasController {
     
     
     public void cargarDatos(){
-        tblDetallesFacturas.setItems(getDetallesFactura());
+        tblDetallesFacturas.setItems(getDetallesFacturas());
         colCodigoDetallesFac.setCellFactory(new PropertyValueFactory<DetallesFacturas, Integer>("codigoDetalleFac"));
         colPrecioUnitacio.setCellFactory(new PropertyValueFactory<DetallesFacturas, Double>("PrecioUnitacio"));
         colCantidad.setCellFactory(new PropertyValueFactory<DetallesFacturas, Integer>("Cantidad"));
@@ -76,17 +76,15 @@ public class MenuDetallesFacturasController {
             PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_BuscarFactura(?)}");
             procedimiento.setInt(1, codigoFactura);
             ResultSet registro = procedimiento.executeQuery();
-            while(registro.next());
+            if (registro.next()){
                 resultado = new Facturas(registro.getInt("codigoFactura"),
                                          registro.getString("estado"),
                                          registro.getDouble("totalFactura"),
                                          registro.getInt("codigoCliente"),
                                          registro.getInt("codigoEmpleados")
-                
-                
                 );
             
-            
+            }   
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -178,13 +176,40 @@ public class MenuDetallesFacturasController {
                 e.printStackTrace();
             }
             
-            public void desactivarControles(){
-                txtcodigoDetalleFac.setEditable(false);
-                txtprecioUnitario.setEditable(false);
-                txtCantidad.setEditable(false);
-                cmbcodigoFactura.setEditable(false);
-            }
+    }
+    
+    public void desactivarControles(){
+        txtcodigoDetalleFac.setEditable(false);
+        txtprecioUnitario.setEditable(false);
+        txtCantidad.setEditable(false);
+        cmbcodigoFactura.setDisable(false);
+    }
+    
+    public void activarControles(){
+        txtcodigoDetalleFac.setEditable(true);
+        txtprecioUnitario.setEditable(true);
+        txtCantidad.setEditable(true);
+        cmbcodigoFactura.setDisable(true);
+    }
+    
+    public void limpiarControles(){
+        txtcodigoDetalleFac.clear();
+        txtprecioUnitario.clear();
+        txtCantidad.clear();
+        cmbcodigoFactura.getSelectionModel().clearSelection();
         
     }
+    
+    public void setEscenarioPrincipal(Principal escenarioPrincipal){
+        this.escenarioPrincipal = escenarioPrincipal;
+    }
+    
+    @FXML
+    public void regresar (ActionEvent event){
+        if (event.getSource() == btnRegresar){
+            escenarioPrincipal.menuDetallesFacturaView();
+        }
+    }
+    
     
 }
