@@ -33,6 +33,7 @@
                   <MenuItem fx:id="btnMenuTelefono" mnemonicParsing="false" onAction="#clicTelefonoPro" text="Telefono Proveedor" />
                   <MenuItem fx:id="btnMenuEmail" mnemonicParsing="false" onAction="#clicEmailPro" text="Email Proveedor" />
                   <MenuItem fx:id="btnMenuFactura" mnemonicParsing="false" onAction="#clicFactura" text="Facturas" />
+                  <MenuItem mnemonicParsing="false" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Reportes">
