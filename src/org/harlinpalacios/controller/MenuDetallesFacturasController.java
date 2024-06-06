@@ -80,6 +80,7 @@ public class MenuDetallesFacturasController {
                 resultado = new Facturas(registro.getInt("codigoFactura"),
                                          registro.getString("estado"),
                                          registro.getDouble("totalFactura"),
+                                         registro.getString("fechaFacura"),
                                          registro.getInt("codigoCliente"),
                                          registro.getInt("codigoEmpleados")
                 );
@@ -121,6 +122,7 @@ public class MenuDetallesFacturasController {
                 lista.add(new Facturas (resultado.getInt("codigoFactura"),
                                         resultado.getString("estado"),
                                         resultado.getDouble("totalFactura"),
+                                        resultado.getString("fechaFactura"),
                                         resultado.getInt("codigoCliente"),
                                         resultado.getInt("codigoEmpleados")                
                 

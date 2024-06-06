@@ -33,10 +33,12 @@ public class MenuFacturasController implements Initializable {
     
     //Setiar los Objetos
     //Iniciales de ComboBox cmb"Funcion"
+    @FXML private Button btnRegresar;
     
     @FXML private TextField txtCodigoF;
     @FXML private TextField txtEstado;
     @FXML private TextField txtTotalFac;
+    @FXML private TextField txtFechaFac;
     @FXML private ComboBox cmbCodigoCliente;
     @FXML private ComboBox cmbCodigoEmpleado;
     
@@ -44,6 +46,7 @@ public class MenuFacturasController implements Initializable {
     @FXML private TableColumn colCodigoF;
     @FXML private TableColumn colEstado;
     @FXML private TableColumn colTotalFac;
+    @FXML private TableColumn colFechaFac;
     @FXML private TableColumn colCodigoCliente;
     @FXML private TableColumn colCodigoEmpleado;
     
@@ -61,12 +64,12 @@ public class MenuFacturasController implements Initializable {
         
     }
     
-    
     public void cargarDatos(){
         tblFactura.setItems(getFacturas());
         colCodigoF.setCellValueFactory(new PropertyValueFactory<Facturas, Integer>("codigoFactura"));
         colEstado.setCellValueFactory(new PropertyValueFactory<Facturas, String>("estado"));
         colTotalFac.setCellValueFactory(new PropertyValueFactory<Facturas, Double>("totalFactura"));
+        colFechaFac.setCellValueFactory(new PropertyValueFactory<Facturas, String>("fechaFactura"));
         colCodigoCliente.setCellValueFactory(new PropertyValueFactory<Facturas, Integer>("codigoCliente"));
         colCodigoEmpleado.setCellValueFactory(new PropertyValueFactory<Facturas, Integer>("codigoEmpleados"));
     }
@@ -76,6 +79,7 @@ public class MenuFacturasController implements Initializable {
        txtCodigoF.setText(String.valueOf(((Facturas)tblFactura.getSelectionModel().getSelectedItem()).getCodigoFactura()));
         txtEstado.setText(((Facturas)tblFactura.getSelectionModel().getSelectedItem()).getEstado());
         txtTotalFac.setText(String.valueOf(((Facturas)tblFactura.getSelectionModel().getSelectedItem()).getTotalFactura()));
+        txtFechaFac.setText(String.valueOf(((Facturas)tblFactura.getSelectionModel().getSelectedItem()).getFechaFactura()));
         cmbCodigoCliente.getSelectionModel().select(buscarCliente(((Facturas)tblFactura.getSelectionModel().getSelectedItem()).getCodigoCliente()));
         cmbCodigoEmpleado.getSelectionModel().select(buscarEmpleados(((Facturas)tblFactura.getSelectionModel().getSelectedItem()).getCodigoEmpleados()));
     }
@@ -146,6 +150,7 @@ public class MenuFacturasController implements Initializable {
                 lista.add(new Facturas (resultado.getInt("codigoFactura"),
                                         resultado.getString("estado"),
                                         resultado.getDouble("totalFactura"),
+                                        resultado.getString("fechaFactura"),
                                         resultado.getInt("codigoCliente"),
                                         resultado.getInt("codigoEmpleados")                
                 
@@ -239,8 +244,9 @@ public class MenuFacturasController implements Initializable {
                 procedimiento.setInt(1, registro.getCodigoFactura());
                 procedimiento.setString(2, registro.getEstado());
                 procedimiento.setDouble(3, registro.getTotalFactura());
-                procedimiento.setInt(4, registro.getCodigoCliente());
-                procedimiento.setInt(5, registro.getCodigoEmpleados());
+                procedimiento.setString(4, registro.getFechaFactura());
+                procedimiento.setInt(5, registro.getCodigoCliente());
+                procedimiento.setInt(6, registro.getCodigoEmpleados());
                 
                 listarFacturas.add(registro);
             
@@ -253,6 +259,7 @@ public class MenuFacturasController implements Initializable {
         txtCodigoF.setEditable(false);
         txtEstado.setEditable(false);
         txtTotalFac.setEditable(false);
+        txtFechaFac.setEditable(false);
         cmbCodigoCliente.setEditable(false);
         cmbCodigoEmpleado.setEditable(false);
         
@@ -261,6 +268,7 @@ public class MenuFacturasController implements Initializable {
         txtCodigoF.setEditable(true);
         txtEstado.setEditable(true);
         txtTotalFac.setEditable(true);
+        txtFechaFac.setEditable(true);
         cmbCodigoCliente.setEditable(true);
         cmbCodigoEmpleado.setEditable(true);
         
@@ -270,6 +278,7 @@ public class MenuFacturasController implements Initializable {
         txtCodigoF.clear();
         txtEstado.clear();
         txtTotalFac.clear();
+        txtFechaFac.clear();
         cmbCodigoCliente.getSelectionModel().getSelectedItem();
         cmbCodigoEmpleado.getSelectionModel().getSelectedItem();
     }
@@ -279,5 +288,11 @@ public class MenuFacturasController implements Initializable {
         this.escenarioPrincipal = escenarioPrincipal;
     }
    
+    @FXML
+    public void regresar (ActionEvent event){
+        if (event.getSource() == btnRegresar){
+            escenarioPrincipal.menuFacturasView();
+        }
+    }
     
 }
