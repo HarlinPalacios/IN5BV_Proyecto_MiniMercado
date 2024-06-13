@@ -75,7 +75,7 @@ public class Principal extends Application {
    
     public void menuClientesView(){
         try{
-            MenuClientesController menuClienteView = (MenuClientesController)cambiarEscena("MenuClientesView.fxml", 720,551);
+            MenuClientesController menuClienteView = (MenuClientesController)cambiarEscena("MenuClientesView.fxml", 719,581);
             menuClienteView.setEscenarioPrincipal(this);
         }catch(Exception e){
             e.printStackTrace();

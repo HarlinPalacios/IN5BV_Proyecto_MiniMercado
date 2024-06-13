@@ -1,6 +1,6 @@
 drop database if exists DBMiniMercado;
 
-create database DBMiniMErcado;
+create database DBMiniMercado;
 use DBMiniMercado;
 
 -- ---------------------------------------------------
@@ -1115,82 +1115,8 @@ call sp_ListarDetallesFacturas();
 
 
 
--- /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
--- /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/TRIGGER/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
-Delimiter $$
-	CREATE trigger tr_PrecioDeProductos_After_Insert
-	after insert on DetallesCompra
-    for each row
-    
-    begin
-		declare total decimal(10,2);
-        declare cantidad int;
-        set total = new.costoUnitario * new.cantidad;
-        
-        update Productos
-        set precioUnitario = total * 0.40,
-			precioDocena = total * 0.35*12,
-            precioMayor = total * 0.25
-		where Productos.codigoProductos = new.codigoProductos;
-		update Productos
-			set Productos.exisencia = Productos.existencia - new.cantidad
-		where Productos.codigoProductos = new.codigoProductos;
-        
-	END $$
-Delimiter ;
 
--- -----------------------------------------------------------------------------------------------------
-Delimiter $$
-	create trigger tr_TotalDelDocumento_After_Insert
-    after insert on DetallesCompra
-    for each row
-    
-    begin
-		declare total decimal(10,2);
-        select sum(costoUnitario * cantidad) into total from DetallesCompra
-        where numeroDocumento = new.numeroDocumento;
-        update Compras
-			set totalDocumento = total
-		where numeroDocumento = new.numeroDocumento;
-	END $$
-Delimiter ;
-
--- -----------------------------------------------------------------------------------------------------
-Delimiter $$
-	create trigger tr_PrecioUnitario_After_Upd
-    after insert on DetallesCompra
-    for each row
-    
-    begin
-		declare precio decimal(10,2);
-        set precio = (select precioUnitario from Productos where codigoProductos = new.codigoProductos);
-        update DetalleFactura
-        set DetalleFactura.precioUnitario = precioP
-        where DetalleFactura.codigoProductos = new.codigoProductos;
-	END $$
-Delimiter ;
-
--- -----------------------------------------------------------------------------------------------------
-Delimiter $$
-	create trigger tr_tatalFactura_After_U
-    after update on DetalleFactura
-    for each row
-    
-    begin
-		declare totalFactura decimal(10,2);
-        select sum(precioUnitario * cantidad) into totalFactura from DetalleFactua
-        where numeroFactura = new.numeroFactura;
-        update Facturas
-			set Facturas.totalFactura = totalFactura
-		where Factura.numerofactura = new.numeroFactura;
-	END $$
-Delimiter ;
--- -----------------------------------------------------------------------------------------------------
-
-
-
-
-
+ALTER USER '2020586_IN5BV'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123!!';
 
 
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportesCargos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc34052c-8bd4-42e4-921e-dbda722ee7c8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[call sp_ListarCargo()]]>
+	</queryString>
+	<field name="codigoCargoEm" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreCargo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcionCargo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="802" uuid="1a8fde6a-fdfb-4944-941f-f9d228012822"/>
+				<imageExpression><![CDATA["C:\\Users\\Informatica\\Desktop\\gitW\\IN5BV_Proyecto_MiniMercado\\src\\org\\harlinpalacios\\imagenes\\Membrete1.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="126" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="436" y="0" width="100" height="20" uuid="743f6528-1717-4ec3-8c27-ef91a87794ac"/>
+				<text><![CDATA[descripcionCargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="0" width="100" height="20" uuid="7b694dc5-44e4-4b1d-9689-6c4a6ef5e775"/>
+				<text><![CDATA[nombreCargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="0" width="100" height="39" uuid="0a8493d1-30cc-4ae9-8e76-6d1747115d50"/>
+				<text><![CDATA[codigoCargoEm]]></text>
+			</staticText>
+			<line>
+				<reportElement x="22" y="19" width="71" height="1" uuid="8d76ce71-88c7-4301-a3bd-d422b8e255b8"/>
+			</line>
+			<line>
+				<reportElement x="228" y="19" width="58" height="1" uuid="fa3d8c27-5c4b-46b6-ad96-2a3df02d24f5"/>
+			</line>
+			<line>
+				<reportElement x="436" y="19" width="77" height="1" uuid="89aaff21-da7d-4fde-bccc-f57b1521f66d"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="436" y="0" width="100" height="20" uuid="43aea707-872a-42b6-b5b5-1c098ce5acc8"/>
+				<textFieldExpression><![CDATA[$F{descripcionCargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="0" width="100" height="20" uuid="cf159e59-5728-4ebb-a396-057fd701e748"/>
+				<textFieldExpression><![CDATA[$F{nombreCargo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="0" width="100" height="20" uuid="a99b3d68-1185-403b-9f85-f2d44fc318ae"/>
+				<textFieldExpression><![CDATA[$F{codigoCargoEm}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

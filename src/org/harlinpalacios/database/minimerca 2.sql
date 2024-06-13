@@ -1,6 +1,6 @@
 drop database if exists DBMiniMercado;
 
-create database DBMiniMErcado;
+create database DBMiniMercado;
 use DBMiniMercado;
 
 -- ---------------------------------------------------
@@ -1115,6 +1115,24 @@ call sp_ListarDetallesFacturas();
 
 
 
+
+ALTER USER '2020586_IN5BV'@'localhost' IDENTIFIED WITH mysql_native_password BY 'abc123!!';
+
+
+
+
+
+
+select * from DetalleFactura
+	join Factura on Detallefactura.codigoDetalleFac = Factura.codigoFactura
+    join Clientes on Factura.codigoFactura = Clientes.NITCliente
+    join Productos on DetalleFactura.codigoDetalleFac = Productos.codigoProductos
+    where factura.codigoFactura = 1;
+
+
+
+
+
 -- /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 -- /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/TRIGGER/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 Delimiter $$
@@ -1186,11 +1204,6 @@ Delimiter $$
 	END $$
 Delimiter ;
 -- -----------------------------------------------------------------------------------------------------
-
-
-
-
-
 
 
 

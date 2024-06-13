@@ -5,6 +5,8 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +25,7 @@ import javax.swing.JOptionPane;
 
 import org.harlinpalacios.bean.Clientes;
 import org.harlinpalacios.db.Conexion;
+import org.harlinpalacios.report.GenerarReportes;
 import org.harlinpalacios.system.Principal;
 
 /**
@@ -265,6 +268,32 @@ public class MenuClientesController implements Initializable{
             e.printStackTrace();
         }
     }
+    
+    
+    public void reporte(){
+        switch (tipoDeOperaciones){
+            case NINGUNO:
+            imprimirReporte();
+            break;
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnEditar.setText("Editar");
+                btnReporte.setText("Reporte");
+                btnAgregar.setDisable(false);
+                btnEliminar.setDisable(false);
+                imgEditar.setImage(new Image("/og/harlinpalacios/images/Actualizar Clientes.png"));
+                imgReporte.setImage(new Image("/org/harlinpalacios/images/Reporte clientes.png"));
+                tipoDeOperaciones = operaciones.NINGUNO;
+        }
+    }
+
+      // imprimir
+      public void imprimirReporte(){
+      Map parametro = new HashMap();
+      parametro.put("codigoCliente", null);
+      GenerarReportes.mostrarReportes("ReportesClientes.jasper", "Reporte de los clientes", parametro);
+      }
     
     
     public void desactivarControles(){

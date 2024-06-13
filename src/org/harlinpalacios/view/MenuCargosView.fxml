@@ -85,7 +85,7 @@
                </graphic>
             </Button>
             <Button fx:id="btnEditar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Actualizar" GridPane.rowIndex="2" />
-            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#actualizar" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Reporte" GridPane.rowIndex="3">
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#reporte" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Reporte" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="imgReporte" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
