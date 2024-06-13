@@ -3,6 +3,7 @@ drop database if exists DBMiniMercado;
 create database DBMiniMErcado;
 use DBMiniMercado;
 
+-- ---------------------------------------------------
 create table Clientes(
 	codigoCliente int not null,
 	nombreCliente varchar(50) not null,
@@ -14,7 +15,7 @@ create table Clientes(
 	primary key PK_codigoCliente(codigoCliente)
 );
 
-
+-- ----------------------------------------------------
 create table Compras(
 	numeroDocumento int not null,
     fechaDocumento date,
@@ -23,14 +24,14 @@ create table Compras(
     primary key PK_numedoDocumento(numeroDocumento)
 );
 
-
+-- -----------------------------------------------------
 create table TipoProducto(
 	codigoTipoPro int not null,
 	descripcion varchar(100) not null,
 	primary key PK_codigoTipoPro(codigoTipoPro)
 );
 
-
+-- ------------------------------------------------------
 create table CargoEmpleado(
 	codigoCargoEm int not null,
     nombreCargo varchar(30) not null,
@@ -38,6 +39,7 @@ create table CargoEmpleado(
     primary key PK_codigoCargoEm(codigoCargoEm)
 );
 
+-- ------------------------------------------------------- 
 create table Proveedores(
 	codigoProveedores int not null,
 	NITProveedor varchar(10) not null,
@@ -50,6 +52,7 @@ create table Proveedores(
 	primary key PK_codigoProveedores(codigoProveedores)
 );
 
+-- ---------------------------------------------------------------------------------
 create table TelefonoProveedores(
 	codigoTelefonoProveedor int not null,
 	numeroPrincipal varchar(8) not null,
@@ -61,6 +64,7 @@ create table TelefonoProveedores(
 	references Proveedores (codigoProveedores)
 );
 
+-- -----------------------------------------------------------------------------
 create table EmailProveedores(
 	codigoEmailProveedor int not null,
     emailProveedor varchar(50) not null,
@@ -71,6 +75,7 @@ create table EmailProveedores(
 	references Proveedores (codigoProveedores)
 );
 
+-- ---------------------------------------------------------------------------------------
 create table Empleados(
 	codigoEmpleados int not null,
 	nombreEmpleado varchar(50) not null,
@@ -83,10 +88,12 @@ create table Empleados(
     Foreign key FK_codigoCargoEm(codigoCargoEm) references CargoEmpleado(codigoCargoEm)
 );
 
+-- -----------------------------------------------------------------------------------------
 create table Facturas(
 	codigoFactura int not null,
 	estado varchar(50) not null,
 	totalFactura decimal(10,2) not null,
+    fechaFactura varchar(45) not null,
 	codigoCliente int not null,
 	codigoEmpleados int not null,
 	primary key PK_codigoFactura(codigoFactura),
@@ -94,7 +101,7 @@ create table Facturas(
 	foreign key FK_codigoEmpleados(codigoEmpleados) references Empleados(codigoEmpleados)
 );
 
-
+-- --------------------------------------------------------------------------------------------------
 create table Productos(
 	codigoProductos int not null,
 	descripcionProducto varchar(100) not null,
@@ -110,6 +117,7 @@ create table Productos(
 	foreign key FK_codigoProveedores(codigoProveedores) references Proveedores(codigoProveedores)
 );
 
+-- ----------------------------------------------------------------------------------------
 create table DetallesCompra(
 	codigoDetalles int not null,
 	costoUnitario decimal(10,2) not null,
@@ -121,8 +129,7 @@ create table DetallesCompra(
 	foreign key FK_numeroDocumento(numeroDocumento) references Compras(numeroDocumento)
 );
 
-
-
+-- ---------------------------------------------------------------------------------------
 create table DetalleFactura(
 	codigoDetalleFac int not null,
 	precioUnitario decimal(10,2) not null,
@@ -131,11 +138,11 @@ create table DetalleFactura(
 	primary key PK_codigoDetalleFac(codigoDetalleFac),
 	foreign key FK_codigoFactura(codigoFactura) references Facturas(codigoFactura)
 );  
+-- ----------------------------------------------------------------------------------------
 
-
-
-
-  -- /////////////////////////////////////////////////////Procedimiento Almacenado/////////////////////////////////////////////////
+  -- ////////////////////////////////////////////////////////////Procedimiento Almacenado/////////////////////////////////////////////////////////
+  
+  
   -- ////////////////////////////////////////////////////////////Clientes//////////////////////////////////////////////////////////
   -- /////////////////////////////////////////////////////////AgregarClientes//////////////////////////////////////////////////////
 
@@ -783,16 +790,16 @@ call sp_ListarEmpleados();
 -- ////////////////////////////////////////////////////////////////////Procedimiento Almacenado De Facturas///////////////////////////////////////////////////////////////
 -- ******************************************************************************Agregar Facturas*************************************************************************
 Delimiter $$
-		create procedure sp_AgregarFacturas(in codigoFactura  int, in estado varchar(50), in totalFactura decimal(10,2), in codigoCliente int, in codigoEmpleados int)
+		create procedure sp_AgregarFacturas(in codigoFactura  int, in estado varchar(50), in totalFactura decimal(10,2), in fechaFactura varchar(45), in codigoCliente int, in codigoEmpleados int)
 	Begin
-		insert into Facturas (codigoFactura,  estado, totalFactura, codigoCliente, codigoEmpleados)
-		values (codigoFactura,  estado, totalFactura, codigoCliente, codigoEmpleados);
+		insert into Facturas (codigoFactura,  estado, totalFactura, fechaFactura, codigoCliente, codigoEmpleados)
+		values (codigoFactura,  estado, totalFactura, fechaFactura, codigoCliente, codigoEmpleados);
 	End $$ 
 Delimiter ;
 
-call sp_AgregarFacturas(1,'Recibida',100.00,2,3);
-call sp_AgregarFacturas(2,'Rechazada',1000.20,3,2);
-call sp_AgregarFacturas(3,'Recibida',500.00,2,3);
+call sp_AgregarFacturas(1,'Recibida',100.00,'2024/05/28',2,3);
+call sp_AgregarFacturas(2,'Rechazada',1000.20,'2020/08/12',3,2);
+call sp_AgregarFacturas(3,'Recibida',500.00,'2015/01/01',2,3);
 
 
 -- ***********************************************************Listar Facturas*******************************************************
@@ -803,6 +810,7 @@ Delimiter $$
         H.codigoFactura,
         H.estado,
         H.totalFactura,
+        H.fechaFactura,
         H.codigoCliente,
         H.codigoEmpleados
         from Facturas H;
@@ -820,6 +828,7 @@ Delimiter $$
         H.codigoFactura,
         H.estado,
         H.totalFactura,
+        H.fechaFactura,
         H.codigoCliente,
         H.codigoEmpleados
         from Facturas H
@@ -843,20 +852,21 @@ call sp_ListarFacturas();
 
 -- ***********************************************************Editar Factura*******************************************************
 Delimiter $$
-	create procedure sp_EditarFactura(in codiFactu  int, in esta varchar(50), in totaFact decimal(10,2), in codiClien int, in codiEmplea int)
+	create procedure sp_EditarFactura(in codiFactu  int, in esta varchar(50), in totaFact decimal(10,2), in fechaFac varchar(45), in codiClien int, in codiEmplea int)
 		Begin 
 			update Facturas H
 				set
 			H.codigoFactura = codiFactu,
 			H.estado = esta,
 			H.totalFactura = totaFact,
+            H.fechaFactura = fechaFac,
 			H.codigoCliente = codiClien,
 			H.codigoEmpleados = codiEmplea
             where codigoFactura  = codiFactu;
 		End $$
 Delimiter ;
 
-call sp_EditarFactura(1,'Rechazada',100.00,3,2);
+call sp_EditarFactura(1,'Rechazada',100.00,'2000/12/24',3,2);
 call sp_ListarFacturas();
 
 
@@ -1100,3 +1110,87 @@ Delimiter ;
 
 call sp_EditarDetallesFacturas(1,36.00,25,3);
 call sp_ListarDetallesFacturas();
+-- *******************************************************************************************************************************************
+
+
+
+
+-- /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+-- /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/TRIGGER/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
+Delimiter $$
+	CREATE trigger tr_PrecioDeProductos_After_Insert
+	after insert on DetallesCompra
+    for each row
+    
+    begin
+		declare total decimal(10,2);
+        declare cantidad int;
+        set total = new.costoUnitario * new.cantidad;
+        
+        update Productos
+        set precioUnitario = total * 0.40,
+			precioDocena = total * 0.35*12,
+            precioMayor = total * 0.25
+		where Productos.codigoProductos = new.codigoProductos;
+		update Productos
+			set Productos.exisencia = Productos.existencia - new.cantidad
+		where Productos.codigoProductos = new.codigoProductos;
+        
+	END $$
+Delimiter ;
+
+-- -----------------------------------------------------------------------------------------------------
+Delimiter $$
+	create trigger tr_TotalDelDocumento_After_Insert
+    after insert on DetallesCompra
+    for each row
+    
+    begin
+		declare total decimal(10,2);
+        select sum(costoUnitario * cantidad) into total from DetallesCompra
+        where numeroDocumento = new.numeroDocumento;
+        update Compras
+			set totalDocumento = total
+		where numeroDocumento = new.numeroDocumento;
+	END $$
+Delimiter ;
+
+-- -----------------------------------------------------------------------------------------------------
+Delimiter $$
+	create trigger tr_PrecioUnitario_After_Upd
+    after insert on DetallesCompra
+    for each row
+    
+    begin
+		declare precio decimal(10,2);
+        set precio = (select precioUnitario from Productos where codigoProductos = new.codigoProductos);
+        update DetalleFactura
+        set DetalleFactura.precioUnitario = precioP
+        where DetalleFactura.codigoProductos = new.codigoProductos;
+	END $$
+Delimiter ;
+
+-- -----------------------------------------------------------------------------------------------------
+Delimiter $$
+	create trigger tr_tatalFactura_After_U
+    after update on DetalleFactura
+    for each row
+    
+    begin
+		declare totalFactura decimal(10,2);
+        select sum(precioUnitario * cantidad) into totalFactura from DetalleFactua
+        where numeroFactura = new.numeroFactura;
+        update Facturas
+			set Facturas.totalFactura = totalFactura
+		where Factura.numerofactura = new.numeroFactura;
+	END $$
+Delimiter ;
+-- -----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+

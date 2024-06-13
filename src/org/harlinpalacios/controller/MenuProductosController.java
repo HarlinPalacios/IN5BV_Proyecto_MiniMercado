@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.JOptionPane;
 import org.harlinpalacios.bean.Producto;
 import org.harlinpalacios.bean.Proveedores;
 import org.harlinpalacios.bean.TipoProducto;
@@ -197,10 +198,11 @@ public class MenuProductosController implements Initializable {
                 btnEditar.setDisable(true);
                 btnReporte.setDisable(true);
                 tipoDeOperaciones = operaciones.ACTUALIZAR;
+                cargarDatos();
                 break;
             case ACTUALIZAR:
                 guardar();
-                desactivarControles();
+                activarControles();
                 limpiarControles();
                 btnAgregar.setText("Agregar");
                 btnEliminar.setText("Eliminar");
@@ -233,13 +235,45 @@ public class MenuProductosController implements Initializable {
                 procedimiento.setInt(6, registro.getExistencia());
                 procedimiento.setInt(7, registro.getCodigoTipoPro());
                 procedimiento.setInt(8, registro.getCodigoProveedores());
-                
+                procedimiento.execute();
                 listarProductos.add(registro);
             
         }catch(Exception e){
             e.printStackTrace();
         }
     }
+    
+    
+    public void eliminar() {
+        switch (tipoDeOperaciones) {
+            case ACTUALIZAR:
+                desactivarControles();
+                limpiarControles();
+                btnAgregar.setText("Agregar");
+                btnEliminar.setText("Eliminar");
+                btnEditar.setDisable(false);
+                btnReporte.setDisable(false);
+                tipoDeOperaciones = operaciones.NINGUNO;
+                break;
+            default:
+                if (tblProductos.getSelectionModel().getSelectedItem() != null) {
+                    int respuesta = JOptionPane.showConfirmDialog(null, "Confirmar si elimina el registro", "Eliminar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (respuesta == JOptionPane.YES_NO_OPTION) {
+                        try {
+                            PreparedStatement procedimiento = Conexion.getInstance().getConexion().prepareCall("{call sp_eliminarEmpleado(?) }");
+                            procedimiento.setInt(1, ((Producto) tblProductos.getSelectionModel().getSelectedItem()).getCodigoProductos());
+                            procedimiento.execute();
+                            listarProductos.remove(tblProductos.getSelectionModel().getSelectedItem());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, " Debe de Seleccionar un Elemento ");
+                }
+        }
+    }
+    
     
     public void desactivarControles(){
         txtCodigoProd.setEditable(false);

@@ -10,29 +10,30 @@
 }
 
 .botton2{
-    -fx-background-color: #6fa32e;
-    -fx-border-color: #ee8a15;
+    -fx-background-color: #57c3ce;
+    -fx-border-color: #5e2ed2;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 }
 
 .botton3:hover{
-    -fx-background-color: #729d3e;
+    -fx-background-color: #57c3ce;
     -fx-font-size: 22px;
     -fx-effect: dropshadow(three-pass-box, black, 20,0,0,0);
     
 }
 
-.botton4:hoover{
+.botton4:hover{
     -fx-front_size: 22px;
 }
 
 .table-view.column-header,
 .table-view.column-header-background.filler{
     -fx-cell-size:20;
-    -fx-background-color: #fdebc6
+    -fx-background-color: #2943ce;
 }
 
 .table-row-cel:selected{
-    -fx-background-color: #4d7a2e;
+    -fx-background-color: #2943ce;
 }
+

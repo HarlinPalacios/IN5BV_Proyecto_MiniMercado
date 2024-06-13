@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="421.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harlinpalacios.controller.MenuDetallesFacturasController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.harlinpalacios.controller.MenuDetallesFacturasController">
    <children>
-      <ImageView fitHeight="427.0" fitWidth="612.0" layoutX="-1.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="441.0" fitWidth="623.0" layoutX="-1.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/DetallesFactura.png" />
          </image>
@@ -53,10 +53,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="40.0" prefWidth="90.0" text="Agregar" />
-            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Eliminar" GridPane.rowIndex="1" />
-            <Button fx:id="btnActualizar" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Actualizar" GridPane.rowIndex="2" />
-            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Reporte" GridPane.rowIndex="3" />
+            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Agregar" />
+            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Eliminar" GridPane.rowIndex="1" />
+            <Button fx:id="btnActualizar" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Actualizar" GridPane.rowIndex="2" />
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Reporte" GridPane.rowIndex="3" />
             <ImageView fitHeight="31.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagenes/Agregar%20Cliente.png" />
@@ -87,6 +87,13 @@
             <TableColumn fx:id="colCodigoFactura" prefWidth="117.0" text="codigoFactura" />
         </columns>
       </TableView>
-      <Button fx:id="btnRegresar" layoutX="537.0" layoutY="389.0" mnemonicParsing="false" onAction="#regresar" prefHeight="31.0" prefWidth="68.0" text="Regresar" />
+      <Button fx:id="btnRegresar" layoutX="520.0" layoutY="387.0" mnemonicParsing="false" onAction="#regresar" prefHeight="35.0" prefWidth="90.0" text="Regresar">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Casita.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

@@ -63,10 +63,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="40.0" prefWidth="90.0" text="Agregar" />
-            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#eliminar" prefHeight="40.0" prefWidth="90.0" text="Eliminar" GridPane.rowIndex="1" />
-            <Button fx:id="btnEditar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="90.0" text="Editar" GridPane.rowIndex="2" />
-            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Reporte" GridPane.rowIndex="3" />
+            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="40.0" prefWidth="90.0" styleClass="botton3" stylesheets="@../resouce/MiniMercadoCSS.css" text="Agregar" />
+            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#eliminar" prefHeight="40.0" prefWidth="90.0" styleClass="botton3" stylesheets="@../resouce/MiniMercadoCSS.css" text="Eliminar" GridPane.rowIndex="1" />
+            <Button fx:id="btnEditar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="90.0" styleClass="botton3" stylesheets="@../resouce/MiniMercadoCSS.css" text="Editar" GridPane.rowIndex="2" />
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" styleClass="botton3" stylesheets="@../resouce/MiniMercadoCSS.css" text="Reporte" GridPane.rowIndex="3" />
             <ImageView fx:id="imgAgregar" fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../imagenes/Agregar%20Cliente.png" />
@@ -97,6 +97,13 @@
             <TableColumn fx:id="colTotalD" prefWidth="102.0" text="totalDocumento" />
         </columns>
       </TableView>
-      <Button fx:id="btnRegresar" layoutX="567.0" layoutY="316.0" mnemonicParsing="false" onAction="#regresar" prefHeight="29.0" prefWidth="76.0" text="Regresar" />
+      <Button fx:id="btnRegresar" layoutX="539.0" layoutY="308.0" mnemonicParsing="false" onAction="#regresar" prefHeight="40.0" prefWidth="106.0" text="Regresar">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Casita.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

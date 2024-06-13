@@ -24,7 +24,14 @@
             <Image url="@../imagenes/clientesssss.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnRegresar" layoutX="14.0" layoutY="510.0" mnemonicParsing="false" onAction="#regresar" prefHeight="30.0" prefWidth="76.0" text="Regresar" />
+      <Button fx:id="btnRegresar" layoutX="20.0" layoutY="527.0" mnemonicParsing="false" onAction="#regresar" prefHeight="40.0" prefWidth="98.0" text="Regresar">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Casita.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <GridPane layoutX="59.0" layoutY="180.0" prefHeight="70.0" prefWidth="444.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="59.0" />
@@ -90,10 +97,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="43.0" prefWidth="127.0" text="Agregar" />
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="41.0" prefWidth="126.0" text="Eliminar" GridPane.rowIndex="1" />
-            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="44.0" prefWidth="127.0" text="Reporte" GridPane.rowIndex="3" />
-            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="126.0" text="Editar" GridPane.rowIndex="2" />
+            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="43.0" prefWidth="127.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Agregar" />
+            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="41.0" prefWidth="126.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Eliminar" GridPane.rowIndex="1" />
+            <Button fx:id="btnReporte" mnemonicParsing="false" prefHeight="44.0" prefWidth="127.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Reporte" GridPane.rowIndex="3" />
+            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="126.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Editar" GridPane.rowIndex="2" />
             <ImageView fx:id="imgEditar" fitHeight="31.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
                <image>
                   <Image url="@../imagenes/Actualizar%20Clientes.png" />

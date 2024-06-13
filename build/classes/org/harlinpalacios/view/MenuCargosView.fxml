@@ -48,14 +48,14 @@
             <Label text="Descripcion" />
          </children>
       </GridPane>
-      <TableView fx:id="tblCargos" layoutX="224.0" layoutY="198.0" onMouseClicked="#selecionarElementos" prefHeight="180.0" prefWidth="414.0">
+      <TableView fx:id="tblCargos" layoutX="199.0" layoutY="172.0" onMouseClicked="#selecionarElementos" prefHeight="180.0" prefWidth="414.0">
         <columns>
           <TableColumn fx:id="colCodigoC" prefWidth="151.0" text="Codigo Empleado" />
           <TableColumn fx:id="colNombreC" prefWidth="116.0" text="Nombre" />
             <TableColumn fx:id="colDescripcionC" prefWidth="149.0" text="Descripcion" />
         </columns>
       </TableView>
-      <GridPane layoutX="36.0" layoutY="102.0" prefHeight="217.0" prefWidth="112.0">
+      <GridPane layoutX="36.0" layoutY="102.0" prefHeight="217.0" prefWidth="101.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -66,7 +66,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="40.0" prefWidth="90.0" text="Agregar">
+            <Button fx:id="btnAgregar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#agregar" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Agregar">
                <graphic>
                   <ImageView fx:id="imgAgregar" fitHeight="30.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,7 +75,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#eliminar" prefHeight="40.0" prefWidth="90.0" text="Eliminar" GridPane.rowIndex="1">
+            <Button fx:id="btnEliminar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#eliminar" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Eliminar" GridPane.rowIndex="1">
                <graphic>
                   <ImageView fx:id="imgEliminar" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -84,8 +84,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnEditar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="90.0" text="Actualizar" GridPane.rowIndex="2" />
-            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#actualizar" prefHeight="40.0" prefWidth="90.0" text="Reporte" GridPane.rowIndex="3">
+            <Button fx:id="btnEditar" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#editar" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Actualizar" GridPane.rowIndex="2" />
+            <Button fx:id="btnReporte" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#actualizar" prefHeight="40.0" prefWidth="90.0" styleClass="botton1" stylesheets="@../resouce/MiniMercadoCSS.css" text="Reporte" GridPane.rowIndex="3">
                <graphic>
                   <ImageView fx:id="imgReporte" fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -101,6 +101,13 @@
             </ImageView>
          </children>
       </GridPane>
-      <Button fx:id="btnRegresar" layoutX="647.0" layoutY="365.0" mnemonicParsing="false" onAction="#regresar" text="Regresar" />
+      <Button fx:id="btnRegresar" layoutX="619.0" layoutY="358.0" mnemonicParsing="false" onAction="#regresar" text="Regresar">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/Casita.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>
